@@ -1,0 +1,76 @@
+# Dockerファイルバーション。Docker Composeバージョンではない。
+version: '3.8'
+
+# Docker保存領域に永続データを保存
+volumes:
+  mysql-volume:
+
+
+services:
+  # サービス名
+  web:
+    # ビルドするDockerファイルを指定
+    build:
+      # buildを実行するディレクトリを指定
+      context: .
+      # Dockerファイルパスを指定
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - ./src/:/var/www/html
+    # ポート番号を指定
+    ports:
+      - 8080:80
+    # コンテナ間の依存関係を指定。
+    # appコンテナを起動後、webコンテナを起動する。
+    # appコンテナを起動しないと、nginxはHTTPリクエストをappコンテナに渡せない。
+    depends_on:
+      - app
+
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - ./src/:/var/www/html
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+    ports:
+      - 5173:5173
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - '8090:80'
+    depends_on:
+      - db
+
+  mail:
+    image: mailhog/mailhog
+    ports:
+      # ブラウザ用ポート
+      - "8025:8025"
+      # SMTP用ポート
+      - "1025:1025"
