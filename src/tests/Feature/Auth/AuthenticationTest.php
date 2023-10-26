@@ -42,4 +42,20 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_loginAsGuest_かんたんログイン機能でログインすること(): void
+    {
+        User::factory()->state(['id' => 1])->create();
+
+        $response = $this->post('/login-guest');
+
+        // 認証すること
+        $this->assertAuthenticated();
+        // マイページにリダイレクトすること
+        $response->assertRedirect(RouteServiceProvider::HOME);
+    }
 }

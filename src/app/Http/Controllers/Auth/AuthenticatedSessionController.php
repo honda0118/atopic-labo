@@ -14,6 +14,9 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
+    /** @const guest user id */
+    private const GUEST_USER_ID = 1;
+
     /**
      * Display the login view.
      */
@@ -49,5 +52,18 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * かんたんログイン機能でログインする
+     *
+     * @access public
+     * @return RedirectResponse
+     */
+    public function loginAsGuest(): RedirectResponse
+    {
+        if (Auth::loginUsingId(self::GUEST_USER_ID)) {
+            return redirect(RouteServiceProvider::HOME);
+        }
     }
 }
