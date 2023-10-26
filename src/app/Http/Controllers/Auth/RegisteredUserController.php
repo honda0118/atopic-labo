@@ -65,4 +65,15 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+    /**
+     * 会員登録メニューを表示する
+     * 
+     * @access public
+     * @return Response
+     */
+    public function showRegisterMenu(): Response
+    {
+        return Inertia::render('Auth/RegisterMenu');
+    }
 }

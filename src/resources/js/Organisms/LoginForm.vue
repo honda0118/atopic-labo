@@ -27,8 +27,7 @@ const onSubmit = handleSubmit((values) => {
 });
 
 // guest user
-const formGuestUser = useForm({
-});
+const formGuestUser = useForm({});
 
 const onButtonClicked = () => {
   formGuestUser.post(route("login.guest"));
