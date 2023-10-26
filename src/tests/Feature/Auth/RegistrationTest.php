@@ -247,4 +247,15 @@ class RegistrationTest extends TestCase
             // バリデーションエラーメッセージがセッションに保存されること
             ->assertSessionHasErrors(['email' => 'メールアドレスは既に存在しています。']);
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_showRegisterMenu_会員登録メニューを表示すること(): void
+    {
+        $response = $this->get('/register/menu');
+
+        $response->assertStatus(200);
+    }
 }
