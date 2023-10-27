@@ -7,7 +7,9 @@ use Illuminate\Http\UploadedFile;
 
 class StorageService
 {
+    /** @const icon directory */
     public const ICON_DIRECTORY = 'images/icon';
+    /** @const product directory */
     public const PRODUCT_DIRECTORY = 'images/product';
 
     /**
@@ -21,5 +23,18 @@ class StorageService
     {
         $file_path = Storage::putFile($directory, $file);
         return basename($file_path);
+    }
+
+    /**
+     * ファイルを削除する
+     * 
+     * @access public
+     * @param  string $directory
+     * @param  string $file_name
+     * @return void
+     */
+    public static function delete(string $directory, string $file_name): void
+    {
+        Storage::delete($directory . '/' . $file_name);
     }
 }

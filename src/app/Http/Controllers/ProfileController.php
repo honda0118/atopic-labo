@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\StorageService;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,19 +27,39 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * 会員を更新する
+     * 
+     * @access public
+     * @param  ProfileUpdateRequest $request
+     * @return RedirectResponse
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->fill([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $icon = $user->icon;
 
-        return Redirect::route('profile.edit');
+        if ($request->icon) {
+            $user->icon = StorageService::putFile(StorageService::ICON_DIRECTORY, $request->icon);
+        }
+        // データベースエラーが発生した場合は、アイコンを削除しない
+        $user->save();
+
+        if ($icon !== 'default.png' && $request->icon) {
+            StorageService::delete(StorageService::ICON_DIRECTORY, $icon);
+        }
+
+        return redirect(RouteServiceProvider::HOME)
+            ->with('message', 'プロフィールを更新しました');
     }
 
     /**
