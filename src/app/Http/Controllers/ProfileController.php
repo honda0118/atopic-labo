@@ -93,19 +93,24 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * 会員を削除する
+     * 
+     * @access public
+     * @param  Request $request
+     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current-password'],
-        ]);
-
         $user = $request->user();
 
         Auth::logout();
 
         $user->delete();
+
+        // 未選択アイコンは削除しない
+        if ($user->icon !== 'default.png') {
+            StorageService::delete(StorageService::ICON_DIRECTORY, $user->icon);
+        }
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

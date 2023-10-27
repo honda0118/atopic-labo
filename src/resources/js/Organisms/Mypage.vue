@@ -2,6 +2,8 @@
 import CircularImage from "@/Atoms/Image/CircularImage.vue";
 import ListItemChevronRightIcon from "@/Molecules/ListItemChevronRightIcon.vue";
 import NavListChevronRight from "@/Organisms/NavListChevronRight.vue";
+import UserDeletionModal from "@/Organisms/UserDeletionModal.vue";
+import { useModal } from "@/Composable/Modal";
 import { usePage } from "@inertiajs/vue3";
 import { computed, onUnmounted, watchEffect } from "vue";
 import { useFlashMessageStore } from "@/stores/flashMessage";
@@ -82,9 +84,24 @@ watchEffect(() => {
     }, 10000);
   }
 });
+
+// modal
+const { isOpen } = useModal();
+
+const onItemClicked = () => {
+  if (isEasyLoginUser.value) {
+    return;
+  }
+  isOpen.value = true;
+};
+
+const close = () => {
+  isOpen.value = false;
+};
 </script>
 
 <template>
+  <UserDeletionModal @close="close" :isOpen="isOpen" />
   <div>
     <div class="mb-14 flex flex-col text-center">
       <CircularImage
