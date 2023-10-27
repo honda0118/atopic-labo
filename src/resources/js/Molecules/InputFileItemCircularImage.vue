@@ -11,7 +11,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  optionalIconIsShown: {
+  isShowOptionalIcon: {
     type: Boolean,
     default: false,
   },
@@ -47,7 +47,7 @@ const onFileCanceled = () => {
   <div>
     <div class="flex items-baseline">
       <VLabel class="mb-1 mr-1">{{ label }}</VLabel>
-      <OptionalIcon v-if="optionalIconIsShown" />
+      <OptionalIcon v-if="isShowOptionalIcon" />
     </div>
     <div class="flex items-center">
       <CircularImage :alt="alt" :src="src" class="mr-8"/>

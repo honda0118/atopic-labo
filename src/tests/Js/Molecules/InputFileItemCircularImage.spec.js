@@ -116,7 +116,7 @@ describe("InputFileItemCircularImageコンポーネントテスト", () => {
     // キャンセルイベントが発火すると、CircularImageコンポーネントはprops src「storege/test.jpg」を持つこと
     expect(actualSrc).toBe(options.props.src);
   });
-  test("props optionalIconIsShown default false", () => {
+  test("props isShowOptionalIcon default false", () => {
     const options = {
       props: {
         validationName: "test_validationName",
@@ -128,11 +128,11 @@ describe("InputFileItemCircularImageコンポーネントテスト", () => {
     // OptionalIconコンポーネントを表示しないこと
     expect(actualExists).toBeFalsy();
   });
-  test("props optionalIconIsShown true", () => {
+  test("props isShowOptionalIcon true", () => {
     const options = {
       props: {
         validationName: "test_validationName",
-        optionalIconIsShown: true,
+        isShowOptionalIcon: true,
       },
     };
     const wrapper = mount(InputFileItemCircularImage, options);

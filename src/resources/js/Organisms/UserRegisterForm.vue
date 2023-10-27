@@ -75,7 +75,7 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
     </div>
     <div class="mb-8">
       <InputFileItemCircularImage
-        :optionalIconIsShown="true"
+        :isShowOptionalIcon="true"
         :src="fileSystemUrl + '/images/icon/default.png'"
         accept="image/jpeg, image/png"
         alt="アイコン"
