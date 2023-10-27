@@ -341,21 +341,30 @@ class ProfileTest extends TestCase
         ];
     }
 
-    public function test_user_can_delete_their_account(): void
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_会員を削除すること(): void
     {
-        $user = User::factory()->create();
+        Storage::fake('public');
+        // 削除するアイコンを保存する
+        $file = UploadedFile::fake()->image('test.jpg');
+        Storage::putFile('images/icon', $file);
+        Storage::assertExists('images/icon/' . $file->hashName());
 
-        $response = $this
-            ->actingAs($user)
-            ->delete('/profile', [
-                'password' => 'password',
-            ]);
+        $user = User::factory()
+            ->state(['icon' => $file->hashName()])
+            ->create();
 
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/');
+        $response = $this->actingAs($user)
+            ->delete('/profile');
 
-        $this->assertGuest();
+        // トップページにリダイレクトすること
+        $response->assertRedirect('/');
+        // アイコンを削除すること
+        Storage::assertMissing('images/icon/' . $file->hashName());
+        // 会員をデータベースから削除すること
         $this->assertNull($user->fresh());
     }
 }
