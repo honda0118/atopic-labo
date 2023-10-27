@@ -9,15 +9,30 @@ use Illuminate\Validation\Rule;
 class ProfileUpdateRequest extends FormRequest
 {
     /**
-     * Get the validation rules that apply to the request.
+     * ProfileController updateメソッドで使用するバリデーションルール
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @access public
+     * @return array<string, array<string|Rule>>
      */
     public function rules(): array
     {
         return [
-            'name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'name' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'string', 'email:strict,spoof,filter,dns', Rule::unique(User::class)->ignore($this->user()->id)],
+            'icon' => ['nullable', 'file', 'max:4096', 'image', 'mimes:jpeg,png']
+        ];
+    }
+
+    /**
+     * エラーメッセージ
+     *
+     * @access public
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'icon.max' => '4MB以下のファイルを選択してください。'
         ];
     }
 }
