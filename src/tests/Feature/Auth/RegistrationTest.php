@@ -71,7 +71,7 @@ class RegistrationTest extends TestCase
                     'icon' => UploadedFile::fake()->image('test.jpg')->size(4096)
                 ],
             ],
-            'PNGファイルを保存すること' => [
+            'PNGファイル' => [
                 'request_params' => [
                     'name' => str_repeat('x', 50),
                     'email' => str_repeat('x', 64) . '@gmail.com',
@@ -209,7 +209,7 @@ class RegistrationTest extends TestCase
                     'password_confirmation' => '22222222'
                 ],
             ],
-            '画像ファイル以外は保存できない' => [
+            '画像ファイル以外' => [
                 'expected' => [
                     'icon' => 'アイコンには画像ファイルを指定してください。'
                 ],
@@ -217,12 +217,12 @@ class RegistrationTest extends TestCase
                     'icon' => UploadedFile::fake()->image('test.txt')
                 ],
             ],
-            'JPEG, PNGファイル以外は保存できない' => [
+            'JPEG, PNGファイル以外' => [
                 'expected' => [
                     'icon' => 'アイコンにはjpeg, pngタイプのファイルを指定してください。'
                 ],
                 'request_params' => [
-                    'icon' => UploadedFile::fake()->image('test.txt')
+                    'icon' => UploadedFile::fake()->image('test.gif')
                 ],
             ]
         ];
