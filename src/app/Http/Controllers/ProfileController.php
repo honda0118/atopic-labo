@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Services\StorageService;
 use App\Providers\RouteServiceProvider;
+use App\Http\Requests\ProfileUpdatePasswordRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -60,6 +62,34 @@ class ProfileController extends Controller
 
         return redirect(RouteServiceProvider::HOME)
             ->with('message', 'プロフィールを更新しました');
+    }
+
+    /**
+     * パスワード編集フォームを表示する
+     * 
+     * @access public
+     * @return Response
+     */
+    public function editPassword(): Response
+    {
+        return Inertia::render('Profile/EditPassword');
+    }
+
+    /**
+     * パスワードを更新する
+     * 
+     * @access public
+     * @param  ProfileUpdatePasswordRequest $request
+     * @return RedirectResponse
+     */
+    public function updatePassword(ProfileUpdatePasswordRequest $request): RedirectResponse
+    {
+        $user = $request->user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect(RouteServiceProvider::HOME)
+            ->with('message', 'パスワードを更新しました');
     }
 
     /**

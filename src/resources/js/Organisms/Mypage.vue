@@ -33,7 +33,7 @@ const userItems = [
     nav: "プロフィールを編集する",
   },
   {
-    href: route("mypage"),
+    href: route("profile.password.edit"),
     nav: "パスワードを編集する",
   },
 ];
