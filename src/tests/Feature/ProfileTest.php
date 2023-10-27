@@ -3,7 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -21,44 +24,221 @@ class ProfileTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_profile_information_can_be_updated(): void
+    /**
+     * @access public
+     * @param array $request_params
+     * @return void
+     * @dataProvider data_update_プロフィールを更新すること
+     */
+    public function test_update_プロフィールを更新すること(array $request_params): void
     {
-        $user = User::factory()->create();
+        Storage::fake('public');
+        // アイコンを保存する
+        $file = UploadedFile::fake()->image('test.png');
+        $file_path = Storage::putFile('images/icon', $file);
+        $icon = basename($file_path);
+        $user = User::factory(['icon' => $icon])->create();
+        Storage::assertExists('images/icon/' . $icon);
 
-        $response = $this
-            ->actingAs($user)
-            ->patch('/profile', [
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
+        $response = $this->actingAs($user)
+            ->post('/profile', $request_params);
 
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
-
-        $user->refresh();
-
-        $this->assertSame('Test User', $user->name);
-        $this->assertSame('test@example.com', $user->email);
-        $this->assertNull($user->email_verified_at);
+        // アイコンを削除すること
+        Storage::assertMissing('images/icon/' . $icon);
+        // アイコンを保存すること
+        Storage::assertExists('images/icon/' . $request_params['icon']->hashName());
+        // メッセージをセッションに保存すること
+        $response->assertSessionHas('message', 'プロフィールを更新しました')
+            // マイページにリダイレクトすること
+            ->assertRedirect(RouteServiceProvider::HOME);
+        // 評価でファイルのハッシュ名を使う
+        $request_params['icon'] = $request_params['icon']->hashName();
+        // データベースの会員を更新すること
+        $this->assertDatabaseHas('users', $request_params);
     }
 
-    public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
+    /**
+     * 「test_update_プロフィールを更新すること」メソッドにデータを提供する
+     * 
+     * @access public
+     * @return array
+     */
+    public function data_update_プロフィールを更新すること(): array
     {
+        return [
+            // 境界値
+            // 名前は50文字以下
+            // メールアドレスは74文字以下
+            // ファイルサイズ4MB以下
+            // ※JPGファイルの保存も確認する
+            '境界値' => [
+                'request_params' => [
+                    'name' => str_repeat('x', 50),
+                    'email' => str_repeat('x', 64) . '@gmail.com',
+                    'icon' => UploadedFile::fake()->image('test.jpg')->size(4096)
+                ]
+            ],
+            'PNGファイル' => [
+                'request_params' => [
+                    'name' => str_repeat('x', 50),
+                    'email' => str_repeat('x', 64) . '@gmail.com',
+                    'icon' => UploadedFile::fake()->image('test.png')
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @access public
+     * @param array $expected
+     * @param array $request_params
+     * @return void
+     * @dataProvider data_update_プロフィールを更新しないこと
+     */
+    public function test_update_プロフィールを更新しないこと(array $expected, array $request_params): void
+    {
+        Storage::fake('public');
         $user = User::factory()->create();
 
-        $response = $this
-            ->actingAs($user)
-            ->patch('/profile', [
-                'name' => 'Test User',
-                'email' => $user->email,
-            ]);
+        $response = $this->actingAs($user)
+            ->post('/profile', $request_params);
 
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+        // バリデーションエラーなのでリダイレクトすること
+        $response->assertStatus(302)
+            // バリデーションエラーメッセージをセッションに保存すること
+            ->assertSessionHasErrors($expected);
+    }
 
-        $this->assertNotNull($user->refresh()->email_verified_at);
+    /**
+     * 「test_update_プロフィールを更新しないこと」メソッドにデータを提供する
+     * 
+     * @access public
+     * @return array
+     */
+    public function data_update_プロフィールを更新しないこと(): array
+    {
+        return [
+            '必須項目が未入力' => [
+                'expected' => [
+                    'name' => '名前は必ず指定してください。',
+                    'email' => 'メールアドレスは必ず指定してください。'
+                ],
+                'request_params' => [
+                    'name' => '',
+                    'email' => ''
+                ]
+            ],
+            '名前が文字列以外' => [
+                'expected' => [
+                    'name' => '名前は文字列を指定してください。'
+                ],
+                'request_params' => [
+                    'name' => 1
+                ]
+            ],
+            'メールアドレスが文字列以外' => [
+                'expected' => [
+                    'email' => 'メールアドレスは文字列を指定してください。'
+                ],
+                'request_params' => [
+                    'email' => 1
+                ]
+            ],
+            // 境界値超え
+            // 名前は50文字以下
+            // メールアドレスは74文字以下
+            // ファイルサイズ4MB以下
+            '境界値超え' => [
+                'expected' => [
+                    'name' => '名前は、50文字以下で指定してください。',
+                    'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
+                    'icon' => '4MB以下のファイルを選択してください。'
+                ],
+                'request_params' => [
+                    'name' => str_repeat('x', 51),
+                    'email' => str_repeat('x', 65) . '@gmail.com',
+                    'icon' => UploadedFile::fake()->image('test.png')->size(4097)
+                ]
+            ],
+            'RFCに準拠していないメールアドレス。＠マークの前にドットがある。' => [
+                'expected' => [
+                    'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
+                ],
+                'request_params' => [
+                    'email' => 'test.@gmail.com'
+                ]
+            ],
+            'RFCに準拠していないメールアドレス。＠マークの後ろにドットがある。' => [
+                'expected' => [
+                    'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
+                ],
+                'request_params' => [
+                    'email' => 'test@.gmail.com'
+                ]
+            ],
+            '不正な文字(キリル文字)のメールアドレス' => [
+                'expected' => [
+                    'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
+                ],
+                'request_params' => [
+                    'email' => 'аtest@gmail.com'
+                ]
+            ],
+            'RFCに準拠していない文字を含むメールアドレス' => [
+                'expected' => [
+                    'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
+                ],
+                'request_params' => [
+                    'email' => 'あtest@gmail.com'
+                ]
+            ],
+            '存在しないドメインのメールアドレス' => [
+                'expected' => [
+                    'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
+                ],
+                'request_params' => [
+                    'email' => 'test@gmail12345.com'
+                ]
+            ],
+            '画像ファイル以外' => [
+                'expected' => [
+                    'icon' => 'アイコンには画像ファイルを指定してください。'
+                ],
+                'request_params' => [
+                    'icon' => UploadedFile::fake()->image('test.txt')
+                ]
+            ],
+            'JPEG、PNGファイル以外' => [
+                'expected' => [
+                    'icon' => 'アイコンにはjpeg, pngタイプのファイルを指定してください。'
+                ],
+                'request_params' => [
+                    'icon' => UploadedFile::fake()->image('test.txt')
+                ]
+            ]
+        ];
+    }
+
+    /**
+     * @access public
+     * @param array $expected
+     * @param array $request_params
+     * @return void
+     */
+    public function test_update_登録済みメールアドレスのため、会員を更新しないこと(): void
+    {
+        Storage::fake('public');
+        User::factory()->create(['email' => 'test@gmail.com']);
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->post('/profile', ['email' => 'test@gmail.com']);
+
+        // バリデーションエラーなのでリダイレクトすること
+        $response->assertStatus(302)
+            // バリデーションエラーメッセージをセッションに保存すること
+            ->assertSessionHasErrors(['email' => 'メールアドレスは既に存在しています。']);
     }
 
     public function test_user_can_delete_their_account(): void
@@ -77,23 +257,5 @@ class ProfileTest extends TestCase
 
         $this->assertGuest();
         $this->assertNull($user->fresh());
-    }
-
-    public function test_correct_password_must_be_provided_to_delete_account(): void
-    {
-        $user = User::factory()->create();
-
-        $response = $this
-            ->actingAs($user)
-            ->from('/profile')
-            ->delete('/profile', [
-                'password' => 'wrong-password',
-            ]);
-
-        $response
-            ->assertSessionHasErrors('password')
-            ->assertRedirect('/profile');
-
-        $this->assertNotNull($user->fresh());
     }
 }
