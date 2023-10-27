@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -239,6 +240,105 @@ class ProfileTest extends TestCase
         $response->assertStatus(302)
             // バリデーションエラーメッセージをセッションに保存すること
             ->assertSessionHasErrors(['email' => 'メールアドレスは既に存在しています。']);
+    }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_editPassword_パスワード編集フォームを表示すること(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->get('/profile/password');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @access public
+     * @param array $expected
+     * @param array $request_params
+     * @return void
+     */
+    public function test_updatePassword_パスワードを更新すること(): void
+    {
+        $user = User::factory()->create();
+        $request_params = [
+            'password' => '11111111',
+            'password_confirmation' => '11111111',
+        ];
+
+        $response = $this->actingAs($user)
+            ->patch('/profile/password', $request_params);
+
+        // メッセージをセッションに保存すること
+        $response->assertSessionHas('message', 'パスワードを更新しました')
+            // マイページにリダイレクトすること
+            ->assertRedirect(RouteServiceProvider::HOME);
+
+        $user->fresh();
+        // データベースのパスワードを更新すること
+        $this->assertTrue(Hash::check($request_params['password'], $user->password));
+    }
+
+    /**
+     * @access public
+     * @param array $expected
+     * @param array $request_params
+     * @return void
+     * @dataProvider data_updatePassword_パスワードを更新しないこと
+     */
+    public function test_updatePassword_パスワードを更新しないこと(array $expected, array $request_params): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->patch('/profile/password', $request_params);
+
+        // バリデーションエラーなのでリダイレクトすること
+        $response->assertStatus(302)
+            // バリデーションエラーメッセージをセッションに保存すること
+            ->assertSessionHasErrors($expected);
+    }
+
+    /**
+     * 「test_updatePassword_パスワードを更新しないこと」メソッドにデータを提供する
+     * 
+     * @access public
+     * @return array
+     */
+    public function data_updatePassword_パスワードを更新しないこと(): array
+    {
+        return [
+            '必須項目が未入力' => [
+                'expected' => [
+                    'password' => 'パスワードは必ず指定してください。'
+                ],
+                'request_params' => [
+                    'password' => ''
+                ]
+            ],
+            '境界値超え。パスワードは8文字以上。' => [
+                'expected' => [
+                    'password' => 'パスワードは、8文字以上で指定してください。'
+                ],
+                'request_params' => [
+                    'password' => str_repeat('x', 7),
+                    'password_confirmation' => str_repeat('x', 7)
+                ]
+            ],
+            'パスワードと確認パスワードが不一致' => [
+                'expected' => [
+                    'password' => 'パスワードと確認フィールドとが一致していません。',
+                ],
+                'request_params' => [
+                    'password' => '11111111',
+                    'password_confirmation' => '22222222'
+                ]
+            ]
+        ];
     }
 
     public function test_user_can_delete_their_account(): void
