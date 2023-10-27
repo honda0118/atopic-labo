@@ -213,7 +213,7 @@ class ProfileTest extends TestCase
                     'icon' => 'アイコンにはjpeg, pngタイプのファイルを指定してください。'
                 ],
                 'request_params' => [
-                    'icon' => UploadedFile::fake()->image('test.txt')
+                    'icon' => UploadedFile::fake()->image('test.gif')
                 ]
             ]
         ];
