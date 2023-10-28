@@ -11,19 +11,40 @@ use App\Services\StorageService;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 初期化
+     * 
+     * ポリシーでアクセスを制御する
+     * 
+     * @access public
      */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->authorizeResource(Product::class, 'product');
+    }
+
+    /**
+     * 投稿商品一覧を表示する
+     *
+     * @access public
+     * @param  Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response
+    {
+        $products = Product::with(['productImages', 'brand', 'category'])
+            ->where('user_id', $request->user()->id)
+            ->selectRaw('*, FORMAT(price_including_tax, 0) as price_including_tax')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return Inertia::render('Product/Index', ['products' => $products]);
     }
 
     /**

@@ -15,7 +15,7 @@ const productItems = [
     nav: "商品を投稿する",
   },
   {
-    href: route("mypage"),
+    href: route("products.index"),
     nav: "投稿した商品",
   },
   {
