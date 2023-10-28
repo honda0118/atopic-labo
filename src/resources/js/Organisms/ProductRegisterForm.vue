@@ -7,6 +7,7 @@ import InputTextAreaItem from "@/Molecules/InputTextAreaItem.vue";
 import RatingItem from "@/Molecules/RatingItem.vue";
 import InputFileItemImage from "@/Molecules/InputFileItemImage.vue";
 import { validatePriceIncludingTax, validateReleasedAt } from "@/Modules/validation";
+import { useFlashMessageStore } from "@/stores/flashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { useForm as useFormValidate } from "vee-validate";
 import { computed } from "vue";
@@ -74,7 +75,11 @@ const onSubmit = handleSubmit((values) => {
   form.image3 = values.productImage3;
   form.text = values.reviewText;
   form.score = values.score;
-  form.post(route("products.store"));
+  form.post(route("products.store"), {
+    onSuccess: () => {
+      useFlashMessageStore().setIsShow(true);
+    }
+  });
 });
 
 // brands
