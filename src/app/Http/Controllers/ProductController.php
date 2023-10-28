@@ -112,27 +112,79 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 商品編集フォームを表示する
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  Product $product
+     * @return Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product): Response
     {
-        //
+        $product->productImages;
+
+        return Inertia::render('Product/Edit', [
+            'product' => $product,
+            'brands' => Brand::orderBy('katakana')->get(),
+            'categories' => Category::all()
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * 商品を更新する
      *
-     * @param  \App\Http\Requests\ProductUpdateRequest  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  ProductUpdateRequest $request
+     * @param  Product  $product
+     * @return RedirectResponse
      */
-    public function update(ProductUpdateRequest $request, Product $product)
+    public function update(ProductUpdateRequest $request, Product $product): RedirectResponse
     {
-        //
+        DB::transaction(function () use ($request, $product) {
+            $product->fill([
+                'brand_id' => $request->brand_id,
+                'category_id' => $request->category_id,
+                'name' => $request->name,
+                'description' => $request->description,
+                'price_including_tax' => $request->price_including_tax,
+                'released_at' => $request->released_at,
+                'user_id' => $request->user()->id
+            ])->save();
+
+            $imagesToSave = [];
+
+            if ($request->image1) {
+                if (isset($product->productImages[0])) {
+                    $product->productImages[0]->delete();
+                    StorageService::delete(StorageService::PRODUCT_DIRECTORY, $product->productImages[0]->image);
+                }
+                $imagesToSave[] = ['image' => StorageService::putFile(StorageService::PRODUCT_DIRECTORY, $request->image1)];
+            }
+
+            if ($request->image2) {
+                if (isset($product->productImages[1])) {
+                    $product->productImages[1]->delete();
+                    StorageService::delete(StorageService::PRODUCT_DIRECTORY, $product->productImages[1]->image);
+                }
+                $imagesToSave[] = ['image' => StorageService::putFile(StorageService::PRODUCT_DIRECTORY, $request->image2)];
+            }
+
+            if ($request->image3) {
+                if (isset($product->productImages[2])) {
+                    $product->productImages[2]->delete();
+                    StorageService::delete(StorageService::PRODUCT_DIRECTORY, $product->productImages[2]->image);
+                }
+                $imagesToSave[] = ['image' => StorageService::putFile(StorageService::PRODUCT_DIRECTORY, $request->image3)];
+            }
+
+            if (!empty($imagesToSave)) {
+                $product->productImages()->createMany($imagesToSave);
+            }
+        });
+
+        return redirect(RouteServiceProvider::HOME)
+            ->with('message', '商品を更新しました');
     }
+
 
     /**
      * Remove the specified resource from storage.
