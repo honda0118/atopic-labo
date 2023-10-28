@@ -22,7 +22,7 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
           <p class="mb-2 whitespace-pre-wrap">{{ product.description }}</p>
           <span class="mb-1 block">税込価格：{{ product.price_including_tax }}円</span>
           <span class="mb-1 block">発売日：{{ product.released_at }}</span>
-          <span class="mb-2 block">投稿日：{{ product.formated_created_at }}</span>
+          <span class="mb-2 block">投稿日：{{ product.created_at }}</span>
           <LinkButton
             :href="route('products.edit', { product: product.id })"
             class="mr-12 bg-red-500 text-sm"
