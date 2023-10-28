@@ -308,4 +308,26 @@ class ProductTest extends TestCase
                 'name' => '商品名は既に存在しています。',
             ]);
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_index_投稿商品一覧を表示すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+
+        $response = $this->actingAs($user)
+            ->get('/products');
+
+        // コンポーネントにデータを渡すこと
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Product/Index')
+                ->where('products.0.id', $product->id)
+        );
+
+        $response->assertStatus(200);
+    }
 }
