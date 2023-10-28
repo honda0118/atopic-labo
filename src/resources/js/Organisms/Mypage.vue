@@ -11,7 +11,7 @@ import { useFlashMessageStore } from "@/stores/flashMessage";
 // product items
 const productItems = [
   {
-    href: route("mypage"),
+    href: route("products.create"),
     nav: "商品を投稿する",
   },
   {
