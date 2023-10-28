@@ -25,7 +25,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::resource('/products', ProductController::class);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
     Route::resource('/products', ProductController::class)->except(['update', 'show']);
+    Route::post('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 
     Route::get('/mypage', function () {
         return Inertia::render('Mypage');
