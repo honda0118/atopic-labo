@@ -226,7 +226,7 @@ class ProfileTest extends TestCase
      * @param array $request_params
      * @return void
      */
-    public function test_update_登録済みメールアドレスのため、会員を更新しないこと(): void
+    public function test_update_登録済みメールアドレスの場合は、会員を更新しないこと(): void
     {
         Storage::fake('public');
         User::factory()->create(['email' => 'test@gmail.com']);
