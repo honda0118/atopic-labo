@@ -19,7 +19,7 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
       <Media :src="fileSystemUrl + '/images/product/' + product.product_images[0].image" alt="商品">
         <div class="text-sm">
           <span class="mb-2 block">{{ product.category.name }}</span>
-          <pre class="mb-2 whitespace-pre-wrap font-sans">{{ product.description }}</pre>
+          <p class="mb-2 whitespace-pre-wrap">{{ product.description }}</p>
           <span class="mb-1 block">税込価格：{{ product.price_including_tax }}円</span>
           <span class="mb-1 block">発売日：{{ product.released_at }}</span>
           <span class="mb-2 block">投稿日：{{ product.formated_created_at }}</span>
