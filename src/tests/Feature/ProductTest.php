@@ -641,4 +641,74 @@ class ProductTest extends TestCase
             // バリデーションエラーメッセージをセッションに保存すること
             ->assertSessionHasErrors(['name' => '商品名は既に存在しています。']);
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_destroy_アクセス権限がないので商品を削除しないこと(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        // 商品にアクセス権限がない会員
+        $other_user = User::factory()->create();
+
+        $response = $this->actingAs($other_user)
+            ->delete('/products/' . $product->id);
+
+        // Forbidden(403)HTTPステータスコードを返すこと
+        $response->assertForbidden();
+    }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_destroy_商品を削除すること(): void
+    {
+        Storage::fake('public');
+
+        // 削除する商品画像を保存する
+        $image1 = UploadedFile::fake()->image('test.png');
+        $image2 = UploadedFile::fake()->image('test.png');
+        $image3 = UploadedFile::fake()->image('test.png');
+        Storage::putFile('images/product', $image1);
+        Storage::putFile('images/product', $image2);
+        Storage::putFile('images/product', $image3);
+
+        // 商品画像が保存されているか確認する
+        Storage::assertExists('images/product/' . $image1->hashName());
+        Storage::assertExists('images/product/' . $image2->hashName());
+        Storage::assertExists('images/product/' . $image3->hashName());
+
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $product->productImages()->createMany([
+            ['image' => $image1->hashName()],
+            ['image' => $image2->hashName()],
+            ['image' => $image3->hashName()],
+        ]);
+
+        $response = $this->actingAs($user)
+            ->from('/products')
+            ->delete('/products/' . $product->id);
+
+        // マイページにリダイレクトすること
+        $response->assertStatus(302)
+            ->assertRedirect('/products');
+
+        // 商品画像を削除すること
+        Storage::assertMissing('images/product/' . $image1->hashName());
+        Storage::assertMissing('images/product/' . $image2->hashName());
+        Storage::assertMissing('images/product/' . $image3->hashName());
+
+        // 商品をデータベースから削除すること
+        $this->assertNull($product->fresh());
+        // 商品画像1をデータベースから削除すること
+        $this->assertDatabaseMissing('product_images', ['image' => $image1->hashName()]);
+        // 商品画像2をデータベースから削除すること
+        $this->assertDatabaseMissing('product_images', ['image' => $image2->hashName()]);
+        // 商品画像3をデータベースから削除すること
+        $this->assertDatabaseMissing('product_images', ['image' => $image3->hashName()]);
+    }
 }

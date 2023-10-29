@@ -185,15 +185,23 @@ class ProductController extends Controller
             ->with('message', '商品を更新しました');
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * 商品を削除する
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  Product $product
+     * @return RedirectResponse
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
-        //
+        $productImages = $product->productImages;
+
+        // 商品を削除後に商品画像を削除する
+        $product->delete();
+
+        foreach ($productImages as $productImage) {
+            StorageService::delete(StorageService::PRODUCT_DIRECTORY, $productImage->image);
+        }
+        return back();
     }
 }
