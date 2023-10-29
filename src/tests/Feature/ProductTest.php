@@ -627,7 +627,7 @@ class ProductTest extends TestCase
      * @param array $request_params
      * @return void
      */
-    public function test_update_商品名が同じ場合は、商品を更新しないこと(): void
+    public function test_update_登録済み商品名の場合は、商品を更新しないこと(): void
     {
         $user = User::factory()->create();
         ProductFactory::create($user->id);
