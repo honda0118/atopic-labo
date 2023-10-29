@@ -5,6 +5,7 @@ import SelectItem from "@/Molecules/SelectItem.vue";
 import InputTextItem from "@/Molecules/InputTextItem.vue";
 import InputTextAreaItem from "@/Molecules/InputTextAreaItem.vue";
 import InputFileItemImage from "@/Molecules/InputFileItemImage.vue";
+import { useFlashMessageStore } from "@/stores/flashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { useForm as useFormValidate } from "vee-validate";
 import { validatePriceIncludingTax, validateReleasedAt } from "@/Modules/validation";
@@ -68,7 +69,11 @@ const onSubmit = handleSubmit((values) => {
   form.image1 = values.productImage1;
   form.image2 = values.productImage2;
   form.image3 = values.productImage3;
-  form.post(route("products.update", { product: props.product.id }));
+  form.post(route("products.update", { product: props.product.id }), {
+    onSuccess: () => {
+      useFlashMessageStore().setIsShow(true);
+    }
+  });
 });
 
 // brands
