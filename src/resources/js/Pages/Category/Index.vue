@@ -15,7 +15,7 @@ const formatedCategories = computed(() => {
   return props.categories.map((category) => ({
     id: category.id,
     nav: category.name,
-    href: "",
+    href: route("categories.products", { category: category.id }),
   }));
 });
 </script>

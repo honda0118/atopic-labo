@@ -5,8 +5,10 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
+use Tests\Factories\ProductFactory;
 
 class CategoryTest extends TestCase
 {
@@ -33,5 +35,46 @@ class CategoryTest extends TestCase
                 ->where('asideCategories.0.id', $category->id)
                 ->where('categories.0.id', $category->id)
         );
+    }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_showProductsByCategory_カテゴリー別商品一覧を表示すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $brand = Brand::first();
+        $category = Category::first();
+
+        $response = $this->get('/categories/' . $category->id);
+
+        $response->assertStatus(200);
+
+        // コンポーネントにデータを渡すこと
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Index')
+                ->where('title', $category->name)
+                ->where('heading', $category->name)
+                ->where('products.data.0.id', $product->id)
+                ->where('brands.0.id', $brand->id)
+                ->where('categories.0.id', $category->id)
+        );
+    }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_showProductsByCategory_カテゴリー別商品がない場合はインデックスページにリダイレクトすること(): void
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->get('/categories/' . $category->id);
+
+        $response->assertStatus(302)
+            ->assertRedirect('/');
     }
 }
