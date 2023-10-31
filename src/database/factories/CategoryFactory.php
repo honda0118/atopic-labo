@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->text(20),
-            'order' => fake()->numberBetween(1, 255)
+            'order' => fake()->unique()->numberBetween(1, 255)
         ];
     }
 }
