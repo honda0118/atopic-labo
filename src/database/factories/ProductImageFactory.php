@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Brand>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductImage>
  */
-class BrandFactory extends Factory
+class ProductImageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class BrandFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->text(50),
-            'katakana' => fake()->text(50),
-            'order' => fake()->unique()->numberBetween(1, 255)
+            'image' => fake()->unique()->numberBetween(1, 33) . '.png'
         ];
     }
 }
