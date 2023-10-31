@@ -21,6 +21,7 @@ use Inertia\Inertia;
 Route::get('/', [IndexController::class, 'index']);
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{category}', [CategoryController::class, 'showProductsByCategory'])->name('categories.products');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
