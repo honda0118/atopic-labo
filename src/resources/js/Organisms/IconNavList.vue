@@ -10,10 +10,10 @@ import CategoryIcon from "@/Atoms/Icon/CategoryIcon.vue";
     <IconNav class="mr-4 w-1/3" href="" nav="ランキング">
       <RankingIcon class="mx-auto" />
     </IconNav>
-    <IconNav class="mr-4 w-1/3" href="" nav="カテゴリー">
+    <IconNav class="mr-4 w-1/3" :href="route('categories.index')" nav="カテゴリー">
       <BrandIcon class="mx-auto" />
     </IconNav>
-    <IconNav href="" class="w-1/3" nav="ブランド">
+    <IconNav class="w-1/3" href="" nav="ブランド">
       <CategoryIcon class="mx-auto" />
     </IconNav>
   </nav>
