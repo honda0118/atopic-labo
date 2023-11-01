@@ -147,7 +147,6 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'price_including_tax' => $request->price_including_tax,
                 'released_at' => $request->released_at,
-                'user_id' => $request->user()->id
             ])->save();
 
             $imagesToSave = [];
