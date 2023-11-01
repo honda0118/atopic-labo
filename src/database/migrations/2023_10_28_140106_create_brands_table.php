@@ -17,7 +17,7 @@ return new class extends Migration
             $table->smallIncrements('id');
             $table->string('name', 50)->unique();
             $table->string('name_katakana', 50)->unique();
-            $table->unsignedTinyInteger('order')->unique()->nullable();
+            $table->unsignedMediumInteger('view_count')->default(0);
             $table->timestamps();
         });
     }

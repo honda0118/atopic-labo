@@ -19,21 +19,15 @@ class BrandsTableSeeder extends Seeder
             [
                 'name' => 'アトピタ',
                 'name_katakana' => 'アトピタ',
-                'order' => 1,
             ],
             [
                 'name' => 'アトピコ',
                 'name_katakana' => 'アトピコ',
-                'order' => 2,
             ],
             [
                 'name' => 'キュレル',
                 'name_katakana' => 'キュレル',
-                'order' => 3,
             ],
-        ]);
-
-        DB::table('brands')->insert([
             [
                 'name' => 'ATOPI SMILE',
                 'name_katakana' => 'アトピスマイル',

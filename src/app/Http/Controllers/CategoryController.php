@@ -20,7 +20,7 @@ class CategoryController extends Controller
     public function index(): Response
     {
         return Inertia::render('Category/Index', [
-            'asideBrands' => Brand::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'asideBrands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
             'asideCategories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
             'categories' => Category::all(),
         ]);
@@ -51,7 +51,7 @@ class CategoryController extends Controller
             'title' => $category->name,
             'heading' => $category->name,
             'products' => $products->getProducts(),
-            'brands' => Brand::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'brands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
             'categories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
         ]);
     }
