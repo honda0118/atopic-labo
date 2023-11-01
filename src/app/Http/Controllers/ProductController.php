@@ -56,7 +56,7 @@ class ProductController extends Controller
     public function create(): Response
     {
         return Inertia::render('Product/Create', [
-            'brands' => Brand::orderBy('katakana')->get(),
+            'brands' => Brand::orderBy('name_katakana')->get(),
             'categories' => Category::all()
         ]);
     }
@@ -124,7 +124,7 @@ class ProductController extends Controller
 
         return Inertia::render('Product/Edit', [
             'product' => $product,
-            'brands' => Brand::orderBy('katakana')->get(),
+            'brands' => Brand::orderBy('name_katakana')->get(),
             'categories' => Category::all()
         ]);
     }
