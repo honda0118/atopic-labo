@@ -19,7 +19,6 @@ class BrandFactory extends Factory
         return [
             'name' => fake()->text(50),
             'name_katakana' => fake()->text(50),
-            'order' => fake()->unique()->numberBetween(1, 255)
         ];
     }
 }

@@ -20,7 +20,7 @@ class BrandController extends Controller
     public function index(): Response
     {
         return Inertia::render('Brand/Index', [
-            'asideBrands' => Brand::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'asideBrands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
             'asideCategories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
             'brands' => Brand::orderBy('name_katakana')->get(),
         ]);
@@ -35,6 +35,9 @@ class BrandController extends Controller
      */
     public function showProductsByBrand(Brand $brand)
     {
+        $brand->view_count++;
+        $brand->save();
+
         $products = Product::with(['productImages', 'brand', 'category'])
             ->where('brand_id', $brand->id)
             ->selectRaw('*, FORMAT(price_including_tax, 0) as price_including_tax')
@@ -51,7 +54,7 @@ class BrandController extends Controller
             'title' => $brand->name,
             'heading' => $brand->name,
             'products' => $products->getProducts(),
-            'brands' => Brand::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'brands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
             'categories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
         ]);
     }

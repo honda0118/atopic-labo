@@ -77,4 +77,17 @@ class BrandTest extends TestCase
         $response->assertStatus(302)
             ->assertRedirect('/');
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_showProductsByBrand_ブランド別商品閲覧数をインクリメントすること(): void
+    {
+        $brand = Brand::factory()->create();
+
+        $this->get(route('brands.products', ['brand' => $brand->id]));
+
+        $this->assertSame(1, $brand->fresh()->view_count);
+    }
 }
