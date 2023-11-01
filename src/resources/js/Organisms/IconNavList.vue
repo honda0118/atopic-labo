@@ -3,18 +3,25 @@ import IconNav from "@/Molecules/IconNav.vue";
 import RankingIcon from "@/Atoms/Icon/RankingIcon.vue";
 import BrandIcon from "@/Atoms/Icon/BrandIcon.vue";
 import CategoryIcon from "@/Atoms/Icon/CategoryIcon.vue";
+import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
   <nav class="flex">
-    <IconNav class="mr-4 w-1/3" href="" nav="ランキング">
-      <RankingIcon class="mx-auto" />
-    </IconNav>
-    <IconNav class="mr-4 w-1/3" :href="route('categories.index')" nav="カテゴリー">
-      <BrandIcon class="mx-auto" />
-    </IconNav>
-    <IconNav class="w-1/3" :href="route('brands.index')" nav="ブランド">
-      <CategoryIcon class="mx-auto" />
-    </IconNav>
+    <Link href="" class="mr-4 w-1/3">
+      <IconNav nav="ランキング">
+        <RankingIcon class="mx-auto" />
+      </IconNav>
+    </Link>
+    <Link :href="route('categories.index')" class="mr-4 w-1/3">
+      <IconNav nav="カテゴリー">
+        <BrandIcon class="mx-auto" />
+      </IconNav>
+    </Link>
+    <Link :href="route('brands.index')" class="w-1/3">
+      <IconNav nav="ブランド">
+        <CategoryIcon class="mx-auto" />
+      </IconNav>
+    </Link>
   </nav>
 </template>
