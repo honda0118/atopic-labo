@@ -23,7 +23,6 @@ const formatedCategories = computed(() => {
 <template>
   <TwoColumnLayout>
     <Head title="カテゴリー" />
-    <img v-if="isIndexPage" class="mx-auto w-full max-w-screen-lg" src="/images/top.png" />
     <SearchFormNavMain :brands="asideBrands" :categories="asideCategories" heading="カテゴリー">
       <NavListChevronRight :items="formatedCategories" class="mb-6" />
     </SearchFormNavMain>
