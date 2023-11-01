@@ -41,7 +41,7 @@ class BrandTest extends TestCase
      * @access public
      * @return void
      */
-    public function test_showProductsPerBrand_ブランド別商品一覧を表示すること(): void
+    public function test_showProductsByBrand_ブランド別商品一覧を表示すること(): void
     {
         $user = User::factory()->create();
         $product = ProductFactory::create($user->id);
@@ -68,7 +68,7 @@ class BrandTest extends TestCase
      * @access public
      * @return void
      */
-    public function test_showProductsPerBrand_ブランド別商品がない場合はインデックスページにリダイレクトすること(): void
+    public function test_showProductsByBrand_ブランド別商品がない場合はインデックスページにリダイレクトすること(): void
     {
         $brand = Brand::factory()->create();
 
