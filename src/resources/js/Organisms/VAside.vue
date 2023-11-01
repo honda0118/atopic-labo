@@ -23,7 +23,7 @@ const formatedBrands = computed(() => {
   return props.brands.map((brand) => ({
     id: brand.id,
     nav: brand.name,
-    href: "",
+    href: route("brands.products", { brand: brand.id }),
   }));
 });
 </script>
