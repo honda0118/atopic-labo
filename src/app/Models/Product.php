@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use DateTimeInterface;
 
 class Product extends Model
@@ -96,5 +97,27 @@ class Product extends Model
         return Attribute::make(
             get: fn () => $this->created_at->diffForHumans(Carbon::now())
         );
+    }
+
+    /**
+     * キーワードで検索するクエリーを返す
+     *
+     * @access public
+     * @return Builder|void
+     */
+    public function scopeKeyword($query, $keyword)
+    {
+        if (!is_null($keyword)) {
+            // 全角スペースを半角に変換する
+            $formatedKeyword = mb_convert_kana($keyword, 's');
+            // 空白で区切る
+            $keywords = \preg_split('/[\s]+/', $formatedKeyword, -1, PREG_SPLIT_NO_EMPTY);
+
+            foreach ($keywords as $keyword) {
+                $query->where(DB::raw("CONCAT(products.name, ' ', products.description, ' ', brands.name, ' ', categories.name)"), 'like', '%' . $keyword . '%');
+            }
+            return $query;
+        }
+        return;
     }
 }

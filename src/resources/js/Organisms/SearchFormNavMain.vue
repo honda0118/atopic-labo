@@ -16,6 +16,7 @@ const form = useForm({
 });
 
 const onSubmit = () => {
+  form.get(route("search.index", { keyword: form.keyword }));
 };
 </script>
 
