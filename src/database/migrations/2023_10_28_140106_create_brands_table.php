@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('name', 50)->unique();
-            $table->string('katakana', 50)->unique();
+            $table->string('name_katakana', 50)->unique();
             $table->unsignedTinyInteger('order')->unique()->nullable();
             $table->timestamps();
         });

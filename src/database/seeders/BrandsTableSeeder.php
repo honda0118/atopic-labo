@@ -18,17 +18,17 @@ class BrandsTableSeeder extends Seeder
         DB::table('brands')->insert([
             [
                 'name' => 'アトピタ',
-                'katakana' => 'アトピタ',
+                'name_katakana' => 'アトピタ',
                 'order' => 1,
             ],
             [
                 'name' => 'アトピコ',
-                'katakana' => 'アトピコ',
+                'name_katakana' => 'アトピコ',
                 'order' => 2,
             ],
             [
                 'name' => 'キュレル',
-                'katakana' => 'キュレル',
+                'name_katakana' => 'キュレル',
                 'order' => 3,
             ],
         ]);
@@ -36,67 +36,67 @@ class BrandsTableSeeder extends Seeder
         DB::table('brands')->insert([
             [
                 'name' => 'ATOPI SMILE',
-                'katakana' => 'アトピスマイル',
+                'name_katakana' => 'アトピスマイル',
             ],
             [
                 'name' => 'アトピアD',
-                'katakana' => 'アトピアディー',
+                'name_katakana' => 'アトピアディー',
             ],
             [
                 'name' => 'ケアセラ',
-                'katakana' => 'ケアセラ',
+                'name_katakana' => 'ケアセラ',
             ],
             [
                 'name' => 'ミルふわ',
-                'katakana' => 'ミルフワ',
+                'name_katakana' => 'ミルフワ',
             ],
             [
                 'name' => 'セタフィル',
-                'katakana' => 'セタフィル',
+                'name_katakana' => 'セタフィル',
             ],
             [
                 'name' => 'イハダ',
-                'katakana' => 'イハダ',
+                'name_katakana' => 'イハダ',
             ],
             [
                 'name' => 'ヘパソフト',
-                'katakana' => 'ヘパソフト',
+                'name_katakana' => 'ヘパソフト',
             ],
             [
                 'name' => 'ハレナ',
-                'katakana' => 'ハレナ',
+                'name_katakana' => 'ハレナ',
             ],
             [
                 'name' => 'TIAS',
-                'katakana' => 'ティアス',
+                'name_katakana' => 'ティアス',
             ],
             [
                 'name' => '無添加工房 OKADA',
-                'katakana' => 'ムテンカコウボオカダ',
+                'name_katakana' => 'ムテンカコウボオカダ',
             ],
             [
                 'name' => 'バイオイル',
-                'katakana' => 'バイオイル',
+                'name_katakana' => 'バイオイル',
             ],
             [
                 'name' => '毛穴撫子',
-                'katakana' => 'ケアナナデシコ',
+                'name_katakana' => 'ケアナナデシコ',
             ],
             [
                 'name' => 'コラージュ',
-                'katakana' => 'コラージュ',
+                'name_katakana' => 'コラージュ',
             ],
             [
                 'name' => '咲楽',
-                'katakana' => 'サクラ',
+                'name_katakana' => 'サクラ',
             ],
             [
                 'name' => 'オリヂナル',
-                'katakana' => 'オリヂナル',
+                'name_katakana' => 'オリヂナル',
             ],
             [
                 'name' => 'sea crystals',
-                'katakana' => 'シークリスタルス',
+                'name_katakana' => 'シークリスタルス',
             ]
         ]);
     }
