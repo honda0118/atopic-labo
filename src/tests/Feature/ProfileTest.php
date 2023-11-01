@@ -42,7 +42,7 @@ class ProfileTest extends TestCase
         Storage::assertExists('images/icon/' . $icon);
 
         $response = $this->actingAs($user)
-            ->post('/profile', $request_params);
+            ->post(route('profile.update'), $request_params);
 
         // アイコンを削除すること
         Storage::assertMissing('images/icon/' . $icon);
@@ -102,7 +102,7 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->post('/profile', $request_params);
+            ->post(route('profile.update'), $request_params);
 
         // バリデーションエラーなのでリダイレクトすること
         $response->assertStatus(302)
@@ -234,7 +234,7 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->post('/profile', ['email' => 'test@gmail.com']);
+            ->post(route('profile.update'), ['email' => 'test@gmail.com']);
 
         // バリデーションエラーなのでリダイレクトすること
         $response->assertStatus(302)
@@ -251,7 +251,7 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->get('/profile/password');
+            ->get(route('profile.password.edit'));
 
         $response->assertStatus(200);
     }
@@ -271,7 +271,7 @@ class ProfileTest extends TestCase
         ];
 
         $response = $this->actingAs($user)
-            ->patch('/profile/password', $request_params);
+            ->patch(route('profile.password.update'), $request_params);
 
         // メッセージをセッションに保存すること
         $response->assertSessionHas('message', 'パスワードを更新しました')
@@ -295,7 +295,7 @@ class ProfileTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->patch('/profile/password', $request_params);
+            ->patch(route('profile.password.update'), $request_params);
 
         // バリデーションエラーなのでリダイレクトすること
         $response->assertStatus(302)
@@ -358,7 +358,7 @@ class ProfileTest extends TestCase
             ->create();
 
         $response = $this->actingAs($user)
-            ->delete('/profile');
+            ->delete(route('profile.destroy'));
 
         // トップページにリダイレクトすること
         $response->assertRedirect('/');

@@ -237,7 +237,6 @@ class RegistrationTest extends TestCase
     public function test_store_登録済みメールアドレスのため、会員を登録しないこと(): void
     {
         Storage::fake('public');
-        // 登録済みメールアドレスを確認するテストで使用する
         User::factory()->create(['email' => 'test@gmail.com']);
 
         $response = $this->post('/register', ['email' => 'test@gmail.com']);
@@ -254,7 +253,7 @@ class RegistrationTest extends TestCase
      */
     public function test_showRegisterMenu_会員登録メニューを表示すること(): void
     {
-        $response = $this->get('/register/menu');
+        $response = $this->get(route('register.menu'));
 
         $response->assertStatus(200);
     }

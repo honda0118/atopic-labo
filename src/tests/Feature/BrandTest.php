@@ -23,7 +23,7 @@ class BrandTest extends TestCase
         $category = Category::factory()->create();
         $brand = Brand::factory()->create();
 
-        $response = $this->get('/brands');
+        $response = $this->get(route('brands.index'));
 
         $response->assertStatus(200);
 
@@ -48,7 +48,7 @@ class BrandTest extends TestCase
         $brand = Brand::first();
         $category = Category::first();
 
-        $response = $this->get('/brands/' . $category->id);
+        $response = $this->get(route('brands.products', ['brand' => $brand->id]));
 
         $response->assertStatus(200);
 
@@ -72,7 +72,7 @@ class BrandTest extends TestCase
     {
         $brand = Brand::factory()->create();
 
-        $response = $this->get('/brands/' . $brand->id);
+        $response = $this->get(route('brands.products', ['brand' => $brand->id]));
 
         $response->assertStatus(302)
             ->assertRedirect('/');
