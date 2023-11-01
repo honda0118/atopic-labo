@@ -28,7 +28,7 @@ class ProductTest extends TestCase
         $category = Category::factory()->create();
 
         $response = $this->actingAs(User::factory()->create())
-            ->get('/products/create');
+            ->get(route('products.create'));
 
         // コンポーネントにデータを渡すこと
         $response->assertInertia(
@@ -57,7 +57,7 @@ class ProductTest extends TestCase
         $request_params['category_id'] = $category->id;
 
         $response = $this->actingAs($user)
-            ->post('/products', $request_params);
+            ->post(route('products.store'), $request_params);
 
         // メッセージをセッションに保存すること
         $response->assertSessionHas('message', '商品を投稿しました')
@@ -157,7 +157,7 @@ class ProductTest extends TestCase
     public function test_store_商品を投稿しないこと(array $expected, array $request_params): void
     {
         $response = $this->actingAs(User::factory()->create())
-            ->post('/products', $request_params);
+            ->post(route('products.store'), $request_params);
 
         // バリデーションエラーなのでリダイレクトすること
         $response->assertStatus(302)
@@ -296,7 +296,7 @@ class ProductTest extends TestCase
         $request_params['name'] = $product->name;
 
         $response = $this->actingAs($user)
-            ->post('/products', $request_params);
+            ->post(route('products.store'), $request_params);
 
         // バリデーションエラーなのでリダイレクトすること
         $response->assertStatus(302)
@@ -316,7 +316,7 @@ class ProductTest extends TestCase
         $product = ProductFactory::create($user->id);
 
         $response = $this->actingAs($user)
-            ->get('/products');
+            ->get(route('products.index'));
 
         // コンポーネントにデータを渡すこと
         $response->assertInertia(
@@ -340,7 +340,7 @@ class ProductTest extends TestCase
         $category = Category::first();
 
         $response = $this->actingAs($user)
-            ->get('/products/' . $product->id . '/edit');
+            ->get(route('products.edit', ['product' => $product->id]));
 
         // コンポーネントにデータを渡すこと
         $response->assertInertia(
@@ -366,7 +366,7 @@ class ProductTest extends TestCase
         $other_user = User::factory()->create();
 
         $response = $this->actingAs($other_user)
-            ->get('/products/' . $product->id . '/edit');
+            ->get(route('products.edit', ['product' => $product->id]));
 
         // Forbidden(403)HTTPステータスコードを返すこと
         $response->assertForbidden();
@@ -384,7 +384,7 @@ class ProductTest extends TestCase
         $other_user = User::factory()->create();
 
         $response = $this->actingAs($other_user)
-            ->post('/products/' . $product->id);
+            ->post(route('products.update', ['product' => $product->id]));
 
         // Forbidden(403)HTTPステータスコードを返すこと
         $response->assertForbidden();
@@ -438,7 +438,7 @@ class ProductTest extends TestCase
         ];
 
         $response = $this->actingAs($user)
-            ->post('/products/' . $product->id, $request_params);
+            ->post(route('products.update', ['product' => $product->id]), $request_params);
 
         // バリデーションエラーにならないこと
         $response->assertSessionHasNoErrors()
@@ -492,7 +492,7 @@ class ProductTest extends TestCase
         $product = ProductFactory::create($user->id);
 
         $response = $this->actingAs($user)
-            ->post('/products/' . $product->id, $request_params);
+            ->post(route('products.update', ['product' => $product->id]), $request_params);
 
         // バリデーションエラーになること
         $response->assertStatus(302)
@@ -634,7 +634,7 @@ class ProductTest extends TestCase
         $product = ProductFactory::create($user->id, 'product_name2');
 
         $response = $this->actingAs($user)
-            ->post('/products/' . $product->id, ['name' => 'product_name']);
+            ->post(route('products.update', ['product' => $product->id]), ['name' => 'product_name']);
 
         // バリデーションエラーになること
         $response->assertStatus(302)
@@ -654,7 +654,7 @@ class ProductTest extends TestCase
         $other_user = User::factory()->create();
 
         $response = $this->actingAs($other_user)
-            ->delete('/products/' . $product->id);
+            ->delete(route('products.destroy', ['product' => $product->id]));
 
         // Forbidden(403)HTTPステータスコードを返すこと
         $response->assertForbidden();
@@ -691,7 +691,7 @@ class ProductTest extends TestCase
 
         $response = $this->actingAs($user)
             ->from('/products')
-            ->delete('/products/' . $product->id);
+            ->delete(route('products.destroy', ['product' => $product->id]));
 
         // マイページにリダイレクトすること
         $response->assertStatus(302)

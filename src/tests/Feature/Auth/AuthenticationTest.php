@@ -51,7 +51,7 @@ class AuthenticationTest extends TestCase
     {
         User::factory()->state(['id' => 1])->create();
 
-        $response = $this->post('/login-guest');
+        $response = $this->post(route('login.guest'));
 
         // 認証すること
         $this->assertAuthenticated();
