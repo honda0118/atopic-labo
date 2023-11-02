@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Products;
+use Illuminate\Support\Facades\DB;
 use Inertia\Response;
 use Inertia\Inertia;
 
@@ -35,8 +36,11 @@ class BrandController extends Controller
      */
     public function showProductsByBrand(Brand $brand)
     {
-        $brand->view_count++;
-        $brand->save();
+        DB::transaction(function () use ($brand) {
+            $newBrand = Brand::lockForUpdate()->find($brand->id);
+            $newBrand->view_count++;
+            $newBrand->save();
+        });
 
         $products = Product::with(['productImages', 'brand', 'category'])
             ->where('brand_id', $brand->id)
