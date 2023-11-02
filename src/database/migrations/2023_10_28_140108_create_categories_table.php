@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('name', 20)->unique();
-            $table->unsignedTinyInteger('order')->unique()->nullable();
+            $table->unsignedMediumInteger('view_count')->default(0);
             $table->timestamps();
         });
     }

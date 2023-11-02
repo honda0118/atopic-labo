@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Services\Products;
+use Illuminate\Support\Facades\DB;
 use Inertia\Response;
 use Inertia\Inertia;
 
@@ -21,7 +22,7 @@ class CategoryController extends Controller
     {
         return Inertia::render('Category/Index', [
             'asideBrands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
-            'asideCategories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'asideCategories' => Category::orderBy('view_count', 'desc')->limit(3)->get(),
             'categories' => Category::all(),
         ]);
     }
@@ -35,6 +36,12 @@ class CategoryController extends Controller
      */
     public function showProductsByCategory(Category $category)
     {
+        DB::transaction(function () use ($category) {
+            $newCategory = Category::lockForUpdate()->find($category->id);
+            $newCategory->view_count++;
+            $newCategory->save();
+        });
+
         $products = Product::with(['productImages', 'brand', 'category'])
             ->where('category_id', $category->id)
             ->selectRaw('*, FORMAT(price_including_tax, 0) as price_including_tax')
@@ -52,7 +59,7 @@ class CategoryController extends Controller
             'heading' => $category->name,
             'products' => $products->getProducts(),
             'brands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
-            'categories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'categories' => Category::orderBy('view_count', 'desc')->limit(3)->get(),
         ]);
     }
 }

@@ -32,7 +32,7 @@ class SearchController extends Controller
 
         return Inertia::render('Index', [
             'brands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
-            'categories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'categories' => Category::orderBy('view_count', 'desc')->limit(3)->get(),
             'heading' => $request->keyword,
             'products' => $products->getProducts()->appends(['keyword' => $request->keyword]),
             'title' => $request->keyword . 'の商品検索結果',
