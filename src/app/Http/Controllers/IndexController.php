@@ -36,7 +36,7 @@ class IndexController extends Controller
         return Inertia::render('Index', [
             'isIndexPage' => $isIndexPage,
             'brands' => Brand::orderBy('view_count', 'desc')->limit(3)->get(),
-            'categories' => Category::orderByRaw('`order` IS NULL ASC')->orderBy('order')->limit(3)->get(),
+            'categories' => Category::orderBy('view_count', 'desc')->limit(3)->get(),
             'heading' => '新着商品',
             'products' => $products->getProducts(),
             'title' => '敏感肌、アトピー肌向け商品クチコミサイト',

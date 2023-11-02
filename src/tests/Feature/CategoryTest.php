@@ -77,4 +77,17 @@ class CategoryTest extends TestCase
         $response->assertStatus(302)
             ->assertRedirect('/');
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_showProductsByCategory_カテゴリー別商品閲覧数をインクリメントすること(): void
+    {
+        $category = Category::factory()->create();
+
+        $this->get(route('categories.products', ['category' => $category->id]));
+
+        $this->assertSame(1, $category->fresh()->view_count);
+    }
 }
