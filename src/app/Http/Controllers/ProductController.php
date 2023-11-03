@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Services\StorageService;
+use App\Services\FloorService;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
@@ -101,14 +102,60 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 商品詳細を表示する
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  Request $request
+     * @param  Product $product
+     * @return Response
      */
-    public function show(Product $product)
+    public function show(Request $request, Product $product): Response
     {
-        //
+        $product = Product::with(['productImages', 'brand', 'reviews', 'category'])
+            ->where('id', $product->id)
+            ->selectRaw('*, FORMAT(price_including_tax, 0) as price_including_tax')
+            ->first();
+
+        $user = $request->user();
+
+        $has_registerd_like = false;
+        $has_registerd_favorite = false;
+        $has_registerd_review = false;
+
+        if (is_object($user)) {
+            // like
+            if (is_object($product->likes()->find($user->id))) {
+                $has_registerd_like = true;
+            }
+
+            // favorite
+            if (is_object($product->favorites()->find($user->id))) {
+                $has_registerd_favorite = true;
+            }
+
+            // review
+            // eloquent withメソッドでreviewsを取得済みなのでreviewsメソッドを使わない
+            if (is_object($product->reviews->find($user->id))) {
+                $has_registerd_review = true;
+            }
+        }
+
+        $likes_number =  $product->likes()->count();
+        $avg_score = $product->reviews->avg('pivot.score');
+        $rounded_down_avg_score = 0;
+
+        if (is_numeric($avg_score)) {
+            $rounded_down_avg_score = FloorService::roundDown(1, $avg_score);
+        }
+
+        return Inertia::render('Product/Show', [
+            'product' => $product,
+            'hasRegisterdLike' => $has_registerd_like,
+            'hasRegisterdFavorite' => $has_registerd_favorite,
+            'hasRegisterdReview' => $has_registerd_review,
+            'likesNumber' => $likes_number,
+            'avgScore' => $rounded_down_avg_score,
+        ]);
     }
 
     /**

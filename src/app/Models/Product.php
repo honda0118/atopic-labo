@@ -70,8 +70,31 @@ class Product extends Model
     public function reviews(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'reviews')
-            ->withPivot('id', 'score', 'text')
-            ->orderBy('pivot_id', 'desc');
+            ->withPivot('id', 'score', 'text', 'created_at')
+            ->orderBy('pivot_id', 'desc')
+            ->using(Review::class);
+    }
+
+    /**
+     * いいねテーブルと関連付ける
+     *
+     * @access public
+     * @return BelongsToMany
+     */
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
+
+    /**
+     * お気に入りテーブルと関連付ける
+     *
+     * @access public
+     * @return BelongsToMany
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites');
     }
 
     /**

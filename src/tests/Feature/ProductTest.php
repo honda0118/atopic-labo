@@ -711,4 +711,34 @@ class ProductTest extends TestCase
         // 商品画像3をデータベースから削除すること
         $this->assertDatabaseMissing('product_images', ['image' => $image3->hashName()]);
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_show_商品詳細を表示すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $product->likes()->attach($user->id);
+        $product->favorites()->attach($user->id);
+        $product->reviews()->attach($user->id, ['text' => 'test_text', 'score' => 5]);
+
+        $response = $this->actingAs($user)
+            ->get(route('products.show', ['product' => $product->id]));
+
+        // コンポーネントにデータを渡すこと
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Product/Show')
+                ->where('product.id', $product->id)
+                ->where('hasRegisterdLike', true)
+                ->where('hasRegisterdFavorite', true)
+                ->where('hasRegisterdReview', true)
+                ->where('likesNumber', 1)
+                ->where('avgScore', 5)
+        );
+
+        $response->assertStatus(200);
+    }
 }
