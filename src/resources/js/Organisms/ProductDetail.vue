@@ -36,7 +36,12 @@ const avgScore = props.avgScore;
     <span class="block">発売日：{{ product.released_at }}</span>
     <span class="mb-4 block">投稿日：{{ product.created_at }}</span>
     <p class="mb-6 text-sm text-red-500">マイページでお気に入りを確認できます。</p>
-    <LinkButton v-if="!hasRegisterdReview" :isFull="true" href="" class="bg-red-500">
+    <LinkButton
+      v-if="!hasRegisterdReview"
+      :isFull="true"
+      :href="route('reviews.create', { product_id: product.id })"
+      class="bg-red-500"
+    >
       クチコミを投稿する
     </LinkButton>
   </div>

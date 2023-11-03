@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/products', ProductController::class)->except(['update', 'show']);
     Route::post('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+    Route::resource('/reviews', ReviewController::class)->except('show');
 
     Route::get('/mypage', function () {
         return Inertia::render('Mypage');
