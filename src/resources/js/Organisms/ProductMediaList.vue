@@ -18,9 +18,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
   <ul v-if="products.length" class="border-t border-gray-300">
     <li
       v-for="(product, index) in products"
+      :key="product.id"
       class="border-b border-gray-300 pt-4"
     >
-      <Link href="">
+      <Link :href="route('products.show', { product: product.id })">
         <span class="mb-2 block text-gray-500">{{ product.brand.name }}</span>
         <h2 class="border-b-2 pb-2">{{ product.name }}</h2>
         <Media
