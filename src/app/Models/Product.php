@@ -130,6 +130,8 @@ class Product extends Model
      * キーワードで検索するクエリーを返す
      *
      * @access public
+     * @param  Builder $query
+     * @param  string|null $keyword
      * @return Builder|void
      */
     public function scopeKeyword($query, $keyword)
@@ -137,7 +139,7 @@ class Product extends Model
         if (is_null($keyword)) {
             return;
         }
-        $a = $query;
+
         // 全角スペースを半角に変換する
         $formatedKeyword = mb_convert_kana($keyword, 's');
         // 空白で区切る
