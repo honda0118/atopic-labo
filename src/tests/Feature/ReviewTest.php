@@ -196,4 +196,34 @@ class ReviewTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_index_クチコミ一覧を表示すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $review = [
+            'text' => 'test_text',
+            'score' => 1,
+        ];
+
+        $user->reviews()->attach($product->id, $review);
+
+        $response = $this->actingAs($user)
+            ->get(route('reviews.index'));
+
+        $response->assertStatus(200);
+
+        // コンポーネントにデータを渡すこと
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Review/Index')
+                ->where('products.0.id', $product->id)
+                ->where('products.0.pivot.text', $review['text'])
+                ->where('products.0.pivot.score', $review['score'])
+        );
+    }
 }

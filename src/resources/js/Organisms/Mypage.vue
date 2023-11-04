@@ -23,7 +23,7 @@ const productItems = [
     nav: "お気に入り商品",
   },
   {
-    href: route("mypage"),
+    href: route("reviews.index"),
     nav: "投稿したクチコミ",
   },
 ];
