@@ -10,8 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 use DateTimeInterface;
 
+/**
+ * @property float $avg_score
+ */
 class Product extends Model
 {
     use HasFactory;
@@ -113,7 +117,7 @@ class Product extends Model
      * 保存期間を取得する
      *
      * @access public
-     * @return String
+     * @return Attribute
      */
     public function saveInterval(): Attribute
     {
@@ -130,17 +134,18 @@ class Product extends Model
      */
     public function scopeKeyword($query, $keyword)
     {
-        if (!is_null($keyword)) {
-            // 全角スペースを半角に変換する
-            $formatedKeyword = mb_convert_kana($keyword, 's');
-            // 空白で区切る
-            $keywords = \preg_split('/[\s]+/', $formatedKeyword, -1, PREG_SPLIT_NO_EMPTY);
-
-            foreach ($keywords as $keyword) {
-                $query->where(DB::raw("CONCAT(products.name, ' ', products.description, ' ', brands.name, ' ', categories.name)"), 'like', '%' . $keyword . '%');
-            }
-            return $query;
+        if (is_null($keyword)) {
+            return;
         }
-        return;
+        $a = $query;
+        // 全角スペースを半角に変換する
+        $formatedKeyword = mb_convert_kana($keyword, 's');
+        // 空白で区切る
+        $keywords = \preg_split('/[\s]+/', $formatedKeyword, -1, PREG_SPLIT_NO_EMPTY);
+
+        foreach ($keywords as $keyword) {
+            $query->where(DB::raw("CONCAT(products.name, ' ', products.description, ' ', brands.name, ' ', categories.name)"), 'like', '%' . $keyword . '%');
+        }
+        return $query;
     }
 }

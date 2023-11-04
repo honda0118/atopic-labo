@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use DateTimeInterface;
 
+/**
+ * @property int $user_id
+ */
 class Review extends Pivot
 {
     use HasFactory;
