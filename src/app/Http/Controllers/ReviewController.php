@@ -26,19 +26,27 @@ class ReviewController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * クチコミ一覧を表示する
      *
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  Request $request
+     * @return Response
      */
-    public function index()
+    public function index(Request $request): Response
     {
-        //
+        $products = $request->user()
+            ->reviews()
+            ->with(['productImages', 'brand'])
+            ->get();
+
+        return Inertia::render('Review/Index', ['products' => $products]);
     }
 
     /**
      * クチコミ投稿フォームを表示する
      *
      * @access public
+     * @param  Request $request
      * @return Response
      */
     public function create(Request $request): Response
