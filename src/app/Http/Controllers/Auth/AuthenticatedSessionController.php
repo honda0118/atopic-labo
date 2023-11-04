@@ -14,9 +14,6 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
-    /** @const guest user id */
-    private const GUEST_USER_ID = 1;
-
     /**
      * Display the login view.
      */

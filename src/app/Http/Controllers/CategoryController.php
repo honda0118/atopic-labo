@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Services\Products;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Inertia\Inertia;
 
@@ -31,7 +32,7 @@ class CategoryController extends Controller
      * カテゴリー別商品一覧を表示する
      *
      * @access public
-     * @param int $category_id
+     * @param  Category $category
      * @return Response|RedirectResponse
      */
     public function showProductsByCategory(Category $category)

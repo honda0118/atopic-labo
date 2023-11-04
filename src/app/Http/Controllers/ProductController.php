@@ -167,7 +167,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product): Response
     {
-        $product->productImages;
+        // JSONデータに商品画像を追加する
+        $productImages = $product->productImages;
 
         return Inertia::render('Product/Edit', [
             'product' => $product,
