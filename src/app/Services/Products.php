@@ -9,6 +9,9 @@ use App\Services\FloorService;
 
 class Products
 {
+    /** @const decimal place */
+    private const DECIMAL_PLACE = 1;
+
     /** @var LengthAwarePaginator<Product>|Collection<Product> $products */
     private $products;
 
@@ -33,13 +36,25 @@ class Products
     private function setAvgScore(): void
     {
         foreach ($this->products as $product) {
-            $avg_score =  $product->reviews->avg('pivot.score');
-            $product->avg_score = 0;
-
-            if (is_numeric($avg_score)) {
-                $product->avg_score = FloorService::roundDown(1, $avg_score);
-            }
+            $product->avg_score = $this->calcAvgScore($product->reviews->avg('pivot.score'), self::DECIMAL_PLACE);
         }
+    }
+
+    /**
+     * 平均満足度を計算する
+     * 
+     * @access private
+     * @param  int|float|null $avg_score
+     * @param  int $places
+     * @return int|float
+     */
+    private function calcAvgScore($avg_score, int $places)
+    {
+        if (is_null($avg_score)) {
+            return 0;
+        }
+
+        return FloorService::roundDown($places, $avg_score);
     }
 
     /**
