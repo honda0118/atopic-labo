@@ -53,17 +53,4 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
-
-    /**
-     * かんたんログイン機能でログインする
-     *
-     * @access public
-     * @return RedirectResponse
-     */
-    public function loginAsGuest(): RedirectResponse
-    {
-        if (Auth::loginUsingId(self::GUEST_USER_ID)) {
-            return redirect(RouteServiceProvider::HOME);
-        }
-    }
 }
