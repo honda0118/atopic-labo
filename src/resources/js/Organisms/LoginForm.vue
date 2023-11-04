@@ -27,10 +27,16 @@ const onSubmit = handleSubmit((values) => {
 });
 
 // guest user
-const formGuestUser = useForm({});
+const formGuestUser = useForm({
+  email: "",
+  password: "",
+  remember: false,
+});
 
 const onButtonClicked = () => {
-  formGuestUser.post(route("login.guest"));
+  formGuestUser.email = "test@test.com";
+  formGuestUser.password = "1234567890";
+  formGuestUser.post(route("login"));
 };
 </script>
 
