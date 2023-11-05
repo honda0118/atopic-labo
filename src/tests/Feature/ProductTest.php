@@ -44,10 +44,12 @@ class ProductTest extends TestCase
     /**
      * @access public
      * @param array $request_params
+     * @param array $request_image_params
+     * @param array $request_review_params
      * @return void
      * @dataProvider data_store_商品を投稿すること
      */
-    public function test_store_商品を投稿すること(array $request_params): void
+    public function test_store_商品を投稿すること(array $request_params, array $request_image_params, array $request_review_params): void
     {
         Storage::fake('public');
         $user = User::factory()->create();
@@ -55,9 +57,10 @@ class ProductTest extends TestCase
         $category = Category::factory()->create();
         $request_params['brand_id'] = $brand->id;
         $request_params['category_id'] = $category->id;
+        $marged_request_params = array_merge($request_params, $request_image_params, $request_review_params);
 
         $response = $this->actingAs($user)
-            ->post(route('products.store'), $request_params);
+            ->post(route('products.store'), $marged_request_params);
 
         // メッセージをセッションに保存すること
         $response->assertSessionHas('message', '商品を投稿しました')
@@ -66,30 +69,23 @@ class ProductTest extends TestCase
             ->assertRedirect(RouteServiceProvider::HOME);
 
         // 商品画像を保存すること
-        Storage::assertExists('images/product/' . $request_params['image1']->hashName());
-        Storage::assertExists('images/product/' . $request_params['image2']->hashName());
-        Storage::assertExists('images/product/' . $request_params['image3']->hashName());
-
-        $product_image1_hashName = $request_params['image1']->hashName();
-        $product_image2_hashName = $request_params['image2']->hashName();
-        $product_image3_hashName = $request_params['image3']->hashName();
-        $text = $request_params['text'];
-        $score = $request_params['score'];
-        unset($request_params['text'], $request_params['score'], $request_params['image1'], $request_params['image2'], $request_params['image3']);
+        Storage::assertExists('images/product/' . $request_image_params['image1']->hashName());
+        Storage::assertExists('images/product/' . $request_image_params['image2']->hashName());
+        Storage::assertExists('images/product/' . $request_image_params['image3']->hashName());
 
         // 商品をデータベースに保存すること
         $request_params['user_id'] = $user->id;
         $this->assertDatabaseHas('products', $request_params);
         // 商品画像1をデータベースに保存すること
-        $this->assertDatabaseHas('product_images', ['image' => $product_image1_hashName]);
+        $this->assertDatabaseHas('product_images', ['image' => $request_image_params['image1']->hashName()]);
         // 商品画像2をデータベースに保存すること
-        $this->assertDatabaseHas('product_images', ['image' => $product_image2_hashName]);
+        $this->assertDatabaseHas('product_images', ['image' => $request_image_params['image2']->hashName()]);
         // 商品画像3をデータベースに保存すること
-        $this->assertDatabaseHas('product_images', ['image' => $product_image3_hashName]);
+        $this->assertDatabaseHas('product_images', ['image' => $request_image_params['image3']->hashName()]);
         // クチコミをデータベースに保存すること
         $this->assertDatabaseHas('reviews', [
-            'text' => $text,
-            'score' => $score,
+            'text' => $request_review_params['text'],
+            'score' => $request_review_params['score'],
         ]);
     }
 
@@ -116,9 +112,13 @@ class ProductTest extends TestCase
                     'description' => str_repeat('x', 1000),
                     'price_including_tax' => '100000',
                     'released_at' => Carbon::now()->format('Y-m-d'),
+                ],
+                $request_image_params = [
                     'image1' => UploadedFile::fake()->image('test.jpg')->size(4096),
                     'image2' => UploadedFile::fake()->image('test.jpg')->size(4096),
                     'image3' => UploadedFile::fake()->image('test.jpg')->size(4096),
+                ],
+                $request_review_params = [
                     'text' => str_repeat('x', 1000),
                     'score' => 1,
                 ],
@@ -137,9 +137,13 @@ class ProductTest extends TestCase
                     'description' => str_repeat('x', 1000),
                     'price_including_tax' => '100000',
                     'released_at' => Carbon::now()->format('Y-m-d'),
+                ],
+                $request_image_params = [
                     'image1' => UploadedFile::fake()->image('test.jpg')->size(4096),
                     'image2' => UploadedFile::fake()->image('test.jpg')->size(4096),
                     'image3' => UploadedFile::fake()->image('test.jpg')->size(4096),
+                ],
+                $request_review_params = [
                     'text' => str_repeat('x', 1000),
                     'score' => 5,
                 ],
@@ -432,13 +436,16 @@ class ProductTest extends TestCase
             'description' => str_repeat('x', 1000),
             'price_including_tax' => '100000',
             'released_at' => Carbon::now()->format('Y-m-d'),
+        ];
+        $request_image_params = [
             'image1' => UploadedFile::fake()->image('test.jpg')->size(4096),
             'image2' => UploadedFile::fake()->image('test.jpg')->size(4096),
             'image3' => UploadedFile::fake()->image('test.jpg')->size(4096)
         ];
+        $marged_request_params = array_merge($request_params, $request_image_params);
 
         $response = $this->actingAs($user)
-            ->post(route('products.update', ['product' => $product->id]), $request_params);
+            ->post(route('products.update', ['product' => $product->id]), $marged_request_params);
 
         // バリデーションエラーにならないこと
         $response->assertSessionHasNoErrors()
@@ -459,24 +466,18 @@ class ProductTest extends TestCase
         $this->assertDatabaseMissing('product_images', ['image' => $image3->hashName()]);
 
         // 商品画像を保存すること
-        Storage::assertExists('images/product/' . $request_params['image1']->hashName());
-        Storage::assertExists('images/product/' . $request_params['image2']->hashName());
-        Storage::assertExists('images/product/' . $request_params['image3']->hashName());
-
-        $product_image1_hashName = $request_params['image1']->hashName();
-        $product_image2_hashName = $request_params['image2']->hashName();
-        $product_image3_hashName = $request_params['image3']->hashName();
-
-        unset($request_params['image1'], $request_params['image2'], $request_params['image3']);
+        Storage::assertExists('images/product/' . $request_image_params['image1']->hashName());
+        Storage::assertExists('images/product/' . $request_image_params['image2']->hashName());
+        Storage::assertExists('images/product/' . $request_image_params['image3']->hashName());
 
         // データベースの商品を更新すること
         $this->assertDatabaseHas('products', $request_params);
         // 商品画像1をデータベースに保存すること
-        $this->assertDatabaseHas('product_images', ['image' => $product_image1_hashName]);
+        $this->assertDatabaseHas('product_images', ['image' => $request_image_params['image1']->hashName()]);
         // 商品画像2をデータベースに保存すること
-        $this->assertDatabaseHas('product_images', ['image' => $product_image2_hashName]);
+        $this->assertDatabaseHas('product_images', ['image' => $request_image_params['image2']->hashName()]);
         // 商品画像3をデータベースに保存すること
-        $this->assertDatabaseHas('product_images', ['image' => $product_image3_hashName]);
+        $this->assertDatabaseHas('product_images', ['image' => $request_image_params['image3']->hashName()]);
     }
 
     /**
