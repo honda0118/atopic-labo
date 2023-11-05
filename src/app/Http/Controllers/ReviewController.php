@@ -6,6 +6,7 @@ use App\Http\Requests\ReviewStoreRequest;
 use App\Http\Requests\ReviewUpdateRequest;
 use App\Models\Review;
 use App\Models\Product;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -87,26 +88,34 @@ class ReviewController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * クチコミ編集フォームを表示する
      *
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  Request $request
+     * @param  Review $review
+     * @return Response
      */
-    public function edit(Review $review)
+    public function edit(Request $request, Review $review): Response
     {
-        //
+        return Inertia::render('Review/Edit', [
+            'product' => $request->user()->reviews()->find($review->product_id),
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\ReviewUpdateRequest  $request
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
+     * クチコミを更新する
+     * 
+     * @access public
+     * @param  ReviewUpdateRequest $request
+     * @param  Review $review
+     * @return RedirectResponse
      */
-    public function update(ReviewUpdateRequest $request, Review $review)
+    public function update(ReviewUpdateRequest $request, Review $review): RedirectResponse
     {
-        //
+        $request->user()->reviews()->updateExistingPivot($review->product_id, ['text' => $request->text, 'score' => $request->score]);
+
+        return redirect(RouteServiceProvider::HOME)
+            ->with('message', 'クチコミを更新しました');
     }
 
     /**

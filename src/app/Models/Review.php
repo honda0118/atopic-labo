@@ -11,6 +11,8 @@ use DateTimeInterface;
  */
 class Review extends Pivot
 {
+    protected $table = "reviews";
+
     use HasFactory;
 
     /**
