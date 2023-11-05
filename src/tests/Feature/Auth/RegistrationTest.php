@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -23,24 +24,26 @@ class RegistrationTest extends TestCase
     /**
      * @access public
      * @param array $request_params
+     * @param array $request_password_params
+     * @param array $request_password_confirmation_params
+     * @param array $request_icon_params
      * @return void
      * @dataProvider data_store_会員を登録すること
      */
-    public function test_store_会員を登録すること(array $request_params): void
+    public function test_store_会員を登録すること(array $request_params, array $request_password_params, array $request_password_confirmation_params, array $request_icon_params): void
     {
         Storage::fake('public');
+        $marged_request_params = array_merge($request_params, $request_password_params, $request_password_confirmation_params, $request_icon_params);
 
-        $response = $this->post('/register', $request_params);
-
-        // 評価で使わないので削除する
-        unset($request_params['password'], $request_params['password_confirmation']);
-        // 評価でファイルのハッシュ名を使う
-        $request_params['icon'] = $request_params['icon']->hashName();
+        $response = $this->post('/register', $marged_request_params);
 
         // アイコンをストレージに保存すること
-        Storage::assertExists('images/icon/' . $request_params['icon']);
+        Storage::assertExists('images/icon/' . $request_icon_params['icon']->hashName());
         // 会員をデータベースに保存すること
         $this->assertDatabaseHas('users', $request_params);
+        // パスワードをデータベースに保存すること
+        $user = User::first();
+        $this->assertTrue(Hash::check($request_password_params['password'], $user->password));
         // 認証すること
         $this->assertAuthenticated();
         // マイページにリダイレクトすること
@@ -66,18 +69,30 @@ class RegistrationTest extends TestCase
                 'request_params' => [
                     'name' => str_repeat('x', 50),
                     'email' => str_repeat('x', 64) . '@gmail.com',
+                ],
+                'request_password_params' => [
                     'password' => '12345678',
+                ],
+                'request_password_confirmation_params' => [
                     'password_confirmation' => '12345678',
-                    'icon' => UploadedFile::fake()->image('test.jpg')->size(4096)
+                ],
+                'request_icon_params' => [
+                    'icon' => UploadedFile::fake()->image('test.jpg')->size(4096),
                 ],
             ],
             'PNGファイル' => [
                 'request_params' => [
                     'name' => str_repeat('x', 50),
                     'email' => str_repeat('x', 64) . '@gmail.com',
+                ],
+                'request_password_params' => [
                     'password' => '12345678',
+                ],
+                'request_password_confirmation_params' => [
                     'password_confirmation' => '12345678',
-                    'icon' => UploadedFile::fake()->image('test.png')
+                ],
+                'request_icon_params' => [
+                    'icon' => UploadedFile::fake()->image('test.png')->size(4096)
                 ],
             ],
         ];
