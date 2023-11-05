@@ -691,12 +691,12 @@ class ProductTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->from('/products')
+            ->from(route('products.index'))
             ->delete(route('products.destroy', ['product' => $product->id]));
 
         // マイページにリダイレクトすること
         $response->assertStatus(302)
-            ->assertRedirect('/products');
+            ->assertRedirect(route('products.index'));
 
         // 商品画像を削除すること
         Storage::assertMissing('images/product/' . $image1->hashName());
