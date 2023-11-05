@@ -77,17 +77,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Review $review)
-    {
-        //
-    }
-
-    /**
      * クチコミ編集フォームを表示する
      *
      * @access public
@@ -119,13 +108,17 @@ class ReviewController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * クチコミを削除する
      *
-     * @param  \App\Models\Review  $review
-     * @return \Illuminate\Http\Response
+     * @access public
+     * @param  Request $request
+     * @param  Review $review
+     * @return RedirectResponse
      */
-    public function destroy(Review $review)
+    public function destroy(Request $request, Review $review): RedirectResponse
     {
-        //
+        $request->user()->reviews()->detach($review->product_id);
+
+        return back();
     }
 }

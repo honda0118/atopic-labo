@@ -450,4 +450,54 @@ class ReviewTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_destroy_クチコミを削除すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $user->reviews()->attach($product->id, [
+            'text' => 'test_text',
+            'score' => 1,
+        ]);
+        $product = $user->reviews()->find($product->id);
+
+        $response = $this->actingAs($user)
+            ->from(route('reviews.index'))
+            ->delete(route('reviews.destroy', ['review' => $product->pivot->id]));
+
+        // クチコミ投稿一覧ページにリダイレクトすること
+        $response->assertStatus(302)
+            ->assertRedirect(route('reviews.index'));
+
+        // 商品をデータベースから削除すること
+        $this->assertNull($user->reviews()->find($product->id));
+    }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_destroy_アクセス権限がない場合は、403HTTPステータスコードを返すこと(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $review = [
+            'text' => 'test_text',
+            'score' => 1,
+        ];
+        $user->reviews()->attach($product->id, $review);
+        $product = $user->reviews()->find($product->id);
+        // クチコミにアクセス権限がない会員
+        $other_user = User::factory()->create();
+
+        $response = $this->actingAs($other_user)
+            ->delete(route('reviews.destroy', ['review' => $product->pivot->id]));
+
+        // Forbidden(403)HTTPステータスコードを返すこと
+        $response->assertForbidden();
+    }
 }
