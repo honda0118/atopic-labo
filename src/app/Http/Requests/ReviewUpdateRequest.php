@@ -7,24 +7,16 @@ use Illuminate\Foundation\Http\FormRequest;
 class ReviewUpdateRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * ReviewController updateメソッドで使用するバリデーションルール
      *
-     * @return bool
+     * @access public
+     * @return array<string, array<string>>
      */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'text' => ['required', 'string', 'max:1000'],
+            'score' => ['required', 'integer', 'between:1,5'],
         ];
     }
 }
