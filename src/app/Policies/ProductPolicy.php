@@ -13,10 +13,10 @@ class ProductPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user
+     * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -24,11 +24,11 @@ class ProductPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user
+     * @param  Product  $product
+     * @return bool
      */
-    public function view(?User $user, Product $product)
+    public function view(?User $user, Product $product): bool
     {
         return true;
     }
@@ -36,10 +36,10 @@ class ProductPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
@@ -47,11 +47,11 @@ class ProductPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user
+     * @param  Product  $product
+     * @return bool
      */
-    public function update(User $user, Product $product)
+    public function update(User $user, Product $product): bool
     {
         return $user->id === $product->user_id;
     }
@@ -59,11 +59,11 @@ class ProductPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param  User  $user
+     * @param  Product  $product
+     * @return bool
      */
-    public function delete(User $user, Product $product)
+    public function delete(User $user, Product $product): bool
     {
         return $user->id === $product->user_id;
     }
