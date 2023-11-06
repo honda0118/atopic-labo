@@ -16,11 +16,7 @@ class ProfileTest extends TestCase
 
     public function test_profile_page_is_displayed(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this
-            ->actingAs($user)
-            ->get('/profile');
+        $response = $this->actingAs(User::factory()->create())->get('/profile');
 
         $response->assertOk();
     }
@@ -99,9 +95,8 @@ class ProfileTest extends TestCase
     public function test_update_プロフィールを更新しないこと(array $expected, array $request_params): void
     {
         Storage::fake('public');
-        $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs(User::factory()->create())
             ->post(route('profile.update'), $request_params);
 
         // バリデーションエラーなのでリダイレクトすること
@@ -231,9 +226,7 @@ class ProfileTest extends TestCase
         Storage::fake('public');
         User::factory()->create(['email' => 'test@gmail.com']);
 
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs(User::factory()->create())
             ->post(route('profile.update'), ['email' => 'test@gmail.com']);
 
         // バリデーションエラーなのでリダイレクトすること
@@ -248,9 +241,7 @@ class ProfileTest extends TestCase
      */
     public function test_editPassword_パスワード編集フォームを表示すること(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs(User::factory()->create())
             ->get(route('profile.password.edit'));
 
         $response->assertStatus(200);
@@ -292,9 +283,7 @@ class ProfileTest extends TestCase
      */
     public function test_updatePassword_パスワードを更新しないこと(array $expected, array $request_params): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs(User::factory()->create())
             ->patch(route('profile.password.update'), $request_params);
 
         // バリデーションエラーなのでリダイレクトすること
