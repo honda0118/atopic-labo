@@ -1,53 +1,53 @@
 import LikeIcon from "@/Atoms/Icon/LikeIcon.vue";
-import LikeButton from "@/Molecules/LikeButton.vue";
+import IconButton from "@/Molecules/IconButton.vue";
 import { mount } from "@vue/test-utils";
 
-describe("LikeButtonコンポーネントテスト", () => {
+describe("IconButtonコンポーネントテスト", () => {
   test("props isDisabled true", () => {
     const options = {
       props: {
         isDisabled: true,
       },
     };
-    const wrapper = mount(LikeButton, options);
+    const wrapper = mount(IconButton, options);
     const actualAttributes = wrapper.get("button").attributes();
 
     // button要素はdisabled属性を持つこと
     expect(actualAttributes).toHaveProperty("disabled");
   });
   test("props isDisabled default false", () => {
-    const wrapper = mount(LikeButton);
+    const wrapper = mount(IconButton);
     const actualAttributes = wrapper.get("button").attributes();
 
     // button要素はdisabled属性を持たないこと
     expect(actualAttributes).not.toHaveProperty("disabled");
   });
-  test("props isFull", () => {
+  test("slot default", () => {
     const options = {
-      props: {
-        isFull: true,
+      slots: {
+        default: "test_default",
       },
     };
-    const wrapper = mount(LikeButton, options);
-    const actualIsFull = wrapper.getComponent(LikeIcon).props().isFull;
-
-    // LikeIconコンポーネントはprops isFull「true」を持つこと
-    expect(actualIsFull).toBe(options.props.isFull);
-  });
-  test("props number", () => {
-    const options = {
-      props: {
-        number: 100,
-      },
-    };
-    const wrapper = mount(LikeButton, options);
+    const wrapper = mount(IconButton, options);
     const actualText = wrapper.text();
 
-    // 「100」を表示すること
-    expect(actualText).toContain(options.props.number);
+    // 「test_default」を表示すること
+    expect(actualText).toContain(options.slots.default);
+  });
+  test("slot icon", () => {
+    const options = {
+      slots: {
+        icon: LikeIcon,
+      },
+    };
+    const wrapper = mount(IconButton, options);
+    const actualExists = wrapper.getComponent(LikeIcon).exists();
+
+    // LikeIconコンポーネントを表示すること
+    expect(actualExists).toBeTruthy();
   });
   test("clickイベントを親コンポーネントに通知すること", async () => {
-    const wrapper = mount(LikeButton);
+    const wrapper = mount(IconButton);
     await wrapper.get("button").trigger("click");
     const clickEvent = wrapper.emitted("click");
 

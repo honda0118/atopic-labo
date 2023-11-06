@@ -1,6 +1,8 @@
 <script setup>
 import LinkButton from "@/Atoms/Button/LinkButton.vue";
-import LikeButton from "@/Molecules/LikeButton.vue";
+import HearIcon from "@/Atoms/Icon/HeartIcon.vue";
+import LikeIcon from "@/Atoms/Icon/LikeIcon.vue";
+import IconButton from "@/Molecules/IconButton.vue";
 import StarRating from "vue-star-rating";
 import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
@@ -37,13 +39,37 @@ const onLikeButtonClicked = async () => {
     }
     number.value = response.data.likesNumber;
   } catch (e) {
-    if (e.response.status === HTTP_STATUS_UNAUTHORIZED) {
-      router.get(route("login"));
-    } else {
-      router.get("/");
-    }
+    toOtherPage(e);
   } finally {
     isProcessing.value = false;
+  }
+};
+
+// favorite
+const isFullFavoriteIcon = ref(props.hasRegisterdFavorite);
+
+const onFavoriteButtonClicked = async () => {
+  try {
+    isProcessing.value = true;
+    const response = await axios.post(route("favorites.switch", { product: props.product.id }));
+
+    if (response.status === HTTP_STATUS_CREATED) {
+      isFullFavoriteIcon.value = true;
+    } else {
+      isFullFavoriteIcon.value = false;
+    }
+  } catch (e) {
+    toOtherPage(e);
+  } finally {
+    isProcessing.value = false;
+  }
+};
+
+const toOtherPage = (e) => {
+  if (e.response.status === HTTP_STATUS_UNAUTHORIZED) {
+    router.get(route("login"));
+  } else {
+    router.get("/");
   }
 };
 </script>
@@ -70,12 +96,25 @@ const onLikeButtonClicked = async () => {
     <span class="block">発売日：{{ product.released_at }}</span>
     <span class="mb-4 block">投稿日：{{ product.created_at }}</span>
     <div class="mb-2">
-      <LikeButton
+      <IconButton
         :isDisabled="isProcessing"
-        :isFull="isFullLikeIcon"
-        :number="number"
+        class="mr-4"
+        @click="onFavoriteButtonClicked"
+      >
+        <template v-slot:icon>
+          <HearIcon :isFull="isFullFavoriteIcon" />
+        </template>
+        お気に入りに登録する
+      </IconButton>
+      <IconButton
+        :isDisabled="isProcessing"
         @click="onLikeButtonClicked"
-      />
+      >
+        <template v-slot:icon>
+          <LikeIcon :isFull="isFullLikeIcon" />
+        </template>
+        {{ number }}
+      </IconButton>
     </div>
     <p class="mb-6 text-sm text-red-500">マイページでお気に入りを確認できます。</p>
     <LinkButton
