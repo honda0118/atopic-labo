@@ -1,13 +1,9 @@
 <script setup>
-import LikeIcon from "@/Atoms/Icon/LikeIcon.vue";
-
 defineProps({
   isDisabled: {
     type: Boolean,
     default: false,
   },
-  isFull: Boolean,
-  number: Number,
 });
 
 const emit = defineEmits(["click"]);
@@ -24,7 +20,7 @@ const onButtonClicked = () => {
     type="button"
     @click="onButtonClicked"
   >
-    <LikeIcon :isFull="isFull" class="mr-2" />
-    {{ number }}
+    <slot name="icon" />
+    <slot />
   </button>
 </template>

@@ -68,4 +68,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'likes')
             ->withTimestamps();
     }
+
+    /**
+     * お気に入りテーブルと関連付ける
+     *
+     * @access public
+     * @return BelongsToMany
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'favorites')
+            ->withTimestamps()
+            ->withPivot('id')
+            ->orderBy('favorites.id', 'desc');
+    }
 }

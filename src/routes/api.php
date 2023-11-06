@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +17,5 @@ use App\Http\Controllers\LikeController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/likes/{product}', [LikeController::class, 'switch'])->name('likes.switch');
+    Route::post('/favorites/{product}', [FavoriteController::class, 'switch'])->name('favorites.switch');
 });
