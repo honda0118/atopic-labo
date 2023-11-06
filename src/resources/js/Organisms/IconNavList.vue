@@ -8,7 +8,7 @@ import { Link } from "@inertiajs/vue3";
 
 <template>
   <nav class="flex">
-    <Link href="" class="mr-4 w-1/3">
+    <Link :href="route('ranking.index')" class="mr-4 w-1/3">
       <IconNav nav="ランキング">
         <RankingIcon />
       </IconNav>
