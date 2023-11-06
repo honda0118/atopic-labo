@@ -12,7 +12,7 @@ const strokeWidth = computed(() => {
   return "1";
 });
 
-const classes = computed(() => {
+const attachedClass = computed(() => {
   if (props.isFull) {
     return "fill-pink-500";
   }
@@ -26,7 +26,7 @@ const classes = computed(() => {
     viewBox="0 0 24 24"
     :stroke-width="strokeWidth"
     stroke="currentColor"
-    :class="classes"
+    :class="attachedClass"
     class="h-6 w-6 inline-block"
   >
     <path stroke-linecap="round" stroke-linejoin="round"
