@@ -14,7 +14,7 @@ const props = defineProps({
   avgScore: Number,
 });
 
-const avgScore = props.avgScore;
+const avgScore = props.product.avg_score;
 
 // api
 const HTTP_STATUS_CREATED = 201;

@@ -737,7 +737,6 @@ class ProductTest extends TestCase
                 ->where('hasRegisterdFavorite', true)
                 ->where('hasRegisterdReview', true)
                 ->where('likesNumber', 1)
-                ->where('avgScore', 5)
         );
 
         $response->assertStatus(200);

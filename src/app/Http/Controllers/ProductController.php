@@ -7,8 +7,8 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Services\Products;
 use App\Services\StorageService;
-use App\Services\FloorService;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
@@ -147,20 +147,16 @@ class ProductController extends Controller
         }
 
         $likes_number =  $product->likes()->count();
-        $avg_score = $product->reviews->avg('pivot.score');
-        $rounded_down_avg_score = 0;
 
-        if (is_numeric($avg_score)) {
-            $rounded_down_avg_score = FloorService::roundDown(1, $avg_score);
-        }
+        // 平均満足度を設定する
+        $products = new Products([$product]);
 
         return Inertia::render('Product/Show', [
-            'product' => $product,
+            'product' => $products->getProducts()[0],
             'hasRegisterdLike' => $has_registerd_like,
             'hasRegisterdFavorite' => $has_registerd_favorite,
             'hasRegisterdReview' => $has_registerd_review,
             'likesNumber' => $likes_number,
-            'avgScore' => $rounded_down_avg_score,
         ]);
     }
 
