@@ -124,18 +124,24 @@ class ProductController extends Controller
 
         if (is_object($user)) {
             // like
-            if (is_object($product->likes()->find($user->id))) {
+            $fetched_like_user = $product->likes()->find($user->id);
+
+            if (is_object($fetched_like_user)) {
                 $has_registerd_like = true;
             }
 
             // favorite
-            if (is_object($product->favorites()->find($user->id))) {
+            $fetched_favorite_user = $product->favorites()->find($user->id);
+
+            if (is_object($fetched_favorite_user)) {
                 $has_registerd_favorite = true;
             }
 
             // review
             // eloquent withメソッドでreviewsを取得済みなのでreviewsメソッドを使わない
-            if (is_object($product->reviews->find($user->id))) {
+            $fetched_review_user = $product->reviews->find($user->id);
+
+            if (is_object($fetched_review_user)) {
                 $has_registerd_review = true;
             }
         }
