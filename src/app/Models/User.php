@@ -56,4 +56,16 @@ class User extends Authenticatable
             ->withPivot('id', 'score', 'text')
             ->orderBy('pivot_id', 'desc');
     }
+
+    /**
+     * いいねテーブルと関連付ける
+     *
+     * @access public
+     * @return BelongsToMany
+     */
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'likes')
+            ->withTimestamps();
+    }
 }

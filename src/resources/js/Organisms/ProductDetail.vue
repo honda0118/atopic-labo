@@ -1,17 +1,51 @@
 <script setup>
 import LinkButton from "@/Atoms/Button/LinkButton.vue";
+import LikeButton from "@/Molecules/LikeButton.vue";
 import StarRating from "vue-star-rating";
+import { router } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const props = defineProps({
   product: Object,
-  hasRegisterdLike: Boolean,
   likesNumber: Number,
+  hasRegisterdLike: Boolean,
   hasRegisterdFavorite: Boolean,
   hasRegisterdReview: Boolean,
   avgScore: Number,
 });
 
 const avgScore = props.avgScore;
+
+// api
+const HTTP_STATUS_CREATED = 201;
+const HTTP_STATUS_UNAUTHORIZED = 401;
+const isProcessing = ref(false);
+
+// like
+const isFullLikeIcon = ref(props.hasRegisterdLike);
+const number = ref(props.likesNumber);
+
+const onLikeButtonClicked = async () => {
+  try {
+    isProcessing.value = true;
+    const response = await axios.post(route("likes.switch", { product: props.product.id }));
+
+    if (response.status === HTTP_STATUS_CREATED) {
+      isFullLikeIcon.value = true;
+    } else {
+      isFullLikeIcon.value = false;
+    }
+    number.value = response.data.likesNumber;
+  } catch (e) {
+    if (e.response.status === HTTP_STATUS_UNAUTHORIZED) {
+      router.get(route("login"));
+    } else {
+      router.get("/");
+    }
+  } finally {
+    isProcessing.value = false;
+  }
+};
 </script>
 
 <template>
@@ -35,6 +69,14 @@ const avgScore = props.avgScore;
     <span class="block">税込価格：{{ product.price_including_tax }}円</span>
     <span class="block">発売日：{{ product.released_at }}</span>
     <span class="mb-4 block">投稿日：{{ product.created_at }}</span>
+    <div class="mb-2">
+      <LikeButton
+        :isDisabled="isProcessing"
+        :isFull="isFullLikeIcon"
+        :number="number"
+        @click="onLikeButtonClicked"
+      />
+    </div>
     <p class="mb-6 text-sm text-red-500">マイページでお気に入りを確認できます。</p>
     <LinkButton
       v-if="!hasRegisterdReview"
