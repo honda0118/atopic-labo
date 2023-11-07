@@ -72,7 +72,7 @@ const onSubmit = handleSubmit((values) => {
   form.post(route("products.update", { product: props.product.id }), {
     onSuccess: () => {
       useFlashMessageStore().setIsShow(true);
-    }
+    },
   });
 });
 

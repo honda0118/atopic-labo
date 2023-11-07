@@ -24,7 +24,7 @@ const setThumbsSwiper = (swiper) => {
 /**
  * ・Navigation
  * 画像の切り替えをできるようにする
- * 
+ *
  * ・Thumbs
  * サムネイルをクリックした際に、画像の切り替えをできるようにする
  */
@@ -32,26 +32,26 @@ const modules = [Navigation, Thumbs];
 
 /**
  * swiper props
- * 
+ *
  * ・spaceBetween
  * スライド間の余白を指定（px）
- * 
+ *
  * ・navigation
  * 画像を切り替えるボタンを表示・非表示
- * 
+ *
  * ・thumbs
  * サムネイルスライダーコンポーネントを指定
- * 
+ *
  * ・autoHeight
  * 高さが異なる画像の高さを自動調整する
- * 
+ *
  * swiper thumbnail props
  * ・spaceBetween
  * サムネイル間の余白を指定（px）
- * 
+ *
  * ・slidesPerView
  * 表示するサムネイル数
- * 
+ *
  * ・watchSlidesProgress
  * trueの場合のみ、表示中のサムネイルに「swiper-slide-visible」クラスが付く。
  */
@@ -70,10 +70,7 @@ const modules = [Navigation, Thumbs];
       :autoHeight="true"
     >
       <swiper-slide v-for="(image, index) in images" :key="index">
-        <img 
-          :src="image"
-          class="w-full aspect-square"
-        />
+        <img :src="image" class="aspect-square w-full" />
       </swiper-slide>
     </swiper>
     <swiper
@@ -84,11 +81,12 @@ const modules = [Navigation, Thumbs];
       :watchSlidesProgress="true"
       class="my-swiper-thumbnail"
     >
-      <swiper-slide v-for="(image, index) in images" :key="index" class="cursor-pointer opacity-100">
-        <img 
-          :src="image"
-          class="w-full aspect-square"
-        />
+      <swiper-slide
+        v-for="(image, index) in images"
+        :key="index"
+        class="cursor-pointer opacity-100"
+      >
+        <img :src="image" class="aspect-square w-full" />
       </swiper-slide>
     </swiper>
   </div>

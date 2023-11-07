@@ -26,7 +26,7 @@ const onSubmit = handleSubmit((values) => {
   form.patch(route("profile.password.update"), {
     onSuccess: () => {
       useFlashMessageStore().setIsShow(true);
-    }
+    },
   });
 });
 </script>

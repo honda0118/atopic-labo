@@ -54,7 +54,7 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
             編集する
           </LinkButton>
           <VButton
-            ref="vButtons" 
+            ref="vButtons"
             class="bg-indigo-500 text-sm"
             type="button"
             @click="onDeletionButtonClicked(index, product.pivot.id)"

@@ -17,7 +17,7 @@ const emit = defineEmits(["click"]);
 
 const isDisabledExpose = ref(false);
 defineExpose({
-  isDisabledExpose
+  isDisabledExpose,
 });
 
 const onButtonClicked = () => {

@@ -50,7 +50,9 @@ const onButtonClicked = () => {
       <InputTextItem id="password" label="パスワード" type="password" validationName="password" />
       <ErrorText class="mt-2" :text="form.errors.password" />
     </div>
-    <VButton class="mb-8 bg-indigo-500" :isDisabled="form.processing" :isFull="true">ログイン</VButton>
+    <VButton class="mb-8 bg-indigo-500" :isDisabled="form.processing" :isFull="true"
+      >ログイン</VButton
+    >
     <VButton
       :isDisabled="formGuestUser.processing"
       :isFull="true"

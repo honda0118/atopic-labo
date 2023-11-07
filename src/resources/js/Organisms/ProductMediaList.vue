@@ -29,9 +29,8 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
           alt="商品"
         >
           <div class="text-sm">
-            <span
-              v-if="isShowRanking"
-              class="block text-2xl font-bold text-red-500">#{{ index + 1 }}
+            <span v-if="isShowRanking" class="block text-2xl font-bold text-red-500"
+              >#{{ index + 1 }}
             </span>
             <div class="mb-2 flex items-center">
               <StarRating

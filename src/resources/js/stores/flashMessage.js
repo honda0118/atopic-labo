@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 export const useFlashMessageStore = defineStore({
-  id: 'flashMessage',
+  id: "flashMessage",
   state: () => ({
     isShow: false,
   }),

@@ -50,7 +50,7 @@ const onFileCanceled = () => {
       <OptionalIcon v-if="isShowOptionalIcon" />
     </div>
     <div class="flex items-center">
-      <CircularImage :alt="alt" :src="src" class="mr-8"/>
+      <CircularImage :alt="alt" :src="src" class="mr-8" />
       <InputFile
         :accept="accept"
         :validationName="validationName"

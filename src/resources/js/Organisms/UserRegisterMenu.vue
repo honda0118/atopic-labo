@@ -13,11 +13,7 @@ const onButtonClicked = () => {
 
 <template>
   <div>
-    <LinkButton
-      :isFull="true"
-      :href="route('register')"
-      class="mb-8 bg-indigo-500"
-    >
+    <LinkButton :isFull="true" :href="route('register')" class="mb-8 bg-indigo-500">
       会員登録
     </LinkButton>
     <VButton

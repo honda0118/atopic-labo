@@ -21,4 +21,3 @@ defineProps({
     </SearchFormNavMain>
   </TwoColumnLayout>
 </template>
-
