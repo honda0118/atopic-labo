@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 use Tests\Factories\ProductFactory;
 
@@ -51,5 +52,27 @@ class FavoriteTest extends TestCase
             'product_id' => $product->id,
             'user_id' => $user->id,
         ]);
+    }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_index_お気に入り一覧を表示すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $user->favorites()->attach($product->id);
+
+        $response = $this->actingAs($user)->get(route('favorites.index'));
+
+        // コンポーネントにデータを渡すこと
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Favorite/Index')
+                ->where('products.0.id', $product->id)
+        );
+
+        $response->assertStatus(200);
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HTTP_Response;
 use App\Models\Product;
 use App\Models\Favorite;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class FavoriteController extends Controller
 {
@@ -20,6 +22,24 @@ class FavoriteController extends Controller
     public function __construct()
     {
         $this->authorizeResource(Favorite::class, 'favorite');
+    }
+
+    /**
+     * お気に入り一覧を表示する
+     *
+     * @access public
+     * @param  Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response
+    {
+        $products = $request->user()
+            ->favorites()
+            ->with(['productImages', 'brand'])
+            ->selectRaw('products.*, FORMAT(products.price_including_tax, 0) as price_including_tax')
+            ->get();
+
+        return Inertia::render('Favorite/Index', ['products' => $products]);
     }
 
     /**

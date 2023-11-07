@@ -19,7 +19,7 @@ const productItems = [
     nav: "投稿した商品",
   },
   {
-    href: route("mypage"),
+    href: route("favorites.index"),
     nav: "お気に入り商品",
   },
   {
