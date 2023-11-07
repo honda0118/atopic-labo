@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response as HTTP_Response;
 use App\Models\Product;
 use App\Models\Favorite;
@@ -40,6 +41,21 @@ class FavoriteController extends Controller
             ->get();
 
         return Inertia::render('Favorite/Index', ['products' => $products]);
+    }
+
+    /**
+     * お気に入りを削除する
+     *
+     * @access public
+     * @param  Request $request
+     * @param  Product $product
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, Favorite $favorite): RedirectResponse
+    {
+        $request->user()->favorites()->detach($favorite->product_id);
+
+        return back();
     }
 
     /**
