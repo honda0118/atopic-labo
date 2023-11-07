@@ -75,4 +75,30 @@ class FavoriteTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * @access public
+     * @return void
+     */
+    public function test_destroy_同期通信でお気に入りを削除すること(): void
+    {
+        $user = User::factory()->create();
+        $product = ProductFactory::create($user->id);
+        $user->favorites()->attach($product->id);
+        $product = $user->favorites()->find($product->id);
+
+        $response = $this->actingAs($user)
+            ->from(route('favorites.index'))
+            ->delete(route('favorites.destroy', ['favorite' => $product->pivot->id]));
+
+        // お気に入り一覧ページにリダイレクトすること
+        $response->assertStatus(302)
+            ->assertRedirect(route('favorites.index'));
+
+        // お気に入りをデータベースから削除すること
+        $this->assertDatabaseMissing('favorites', [
+            'product_id' => $product->id,
+            'user_id' => $user->id,
+        ]);
+    }
 }
