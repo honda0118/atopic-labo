@@ -8,6 +8,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -45,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 
     Route::resource('/reviews', ReviewController::class)->except('show');
+
+    Route::resource('/favorites', FavoriteController::class)->except(['store', 'show', 'update', 'create', 'edit']);
 
     Route::get('/mypage', function () {
         return Inertia::render('Mypage');
