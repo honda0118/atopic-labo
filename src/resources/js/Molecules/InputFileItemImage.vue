@@ -50,8 +50,11 @@ const onFileCanceled = () => {
     </div>
     <div class="flex items-center">
       <img class="mr-8 h-28 w-28" :alt="alt" :src="src" />
-      <InputFile :accept="accept" :validationName="validationName"
-        @="{ error: onErrorOccurred, change: onFileChanged, cancel: onFileCanceled }" />
+      <InputFile
+        :accept="accept"
+        :validationName="validationName"
+        @="{ error: onErrorOccurred, change: onFileChanged, cancel: onFileCanceled }"
+      />
     </div>
     <ErrorText class="mt-2" :text="error" />
   </div>

@@ -24,7 +24,11 @@ const onSubmit = () => {
   <div>
     <div class="mx-auto max-w-screen-lg bg-gray-100 p-4">
       <form class="mb-6" @submit.prevent="onSubmit">
-        <SearchForm v-model:keyword="form.keyword" class="mx-auto max-w-2xl" placeholder="例）ブランド・商品・キーワード" />
+        <SearchForm
+          v-model:keyword="form.keyword"
+          class="mx-auto max-w-2xl"
+          placeholder="例）ブランド・商品・キーワード"
+        />
       </form>
       <IconNavList />
     </div>

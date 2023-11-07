@@ -49,7 +49,9 @@ const onFileChanged = (e) => {
 </script>
 
 <template>
-  <label class="cursor-pointer rounded border border-red-500 p-2 text-sm font-medium text-red-500 hover:bg-red-100">
+  <label
+    class="cursor-pointer rounded border border-red-500 p-2 text-sm font-medium text-red-500 hover:bg-red-100"
+  >
     <Field
       :accept="accept"
       :name="validationName"

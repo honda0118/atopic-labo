@@ -125,7 +125,7 @@ const close = () => {
     <ul class="mb-4 cursor-pointer" @click="onItemClicked">
       <ListItemChevronRightIcon nav="退会する" />
     </ul>
-    <p v-if="isEasyLoginUser" class="text-red-500" >
+    <p v-if="isEasyLoginUser" class="text-red-500">
       かんたんログイン機能でログインした会員は、会員メニューを利用することができません。
     </p>
   </div>

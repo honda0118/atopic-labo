@@ -18,10 +18,7 @@ const onButtonClicked = () => {
         <Logo />
       </Link>
       <div v-if="$page.props.auth.user">
-        <Link
-          class="mr-5 text-indigo-600 hover:text-indigo-400"
-          :href="route('mypage')"
-        >
+        <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('mypage')">
           マイページ
         </Link>
         <button
@@ -31,30 +28,18 @@ const onButtonClicked = () => {
         >
           ログアウト
         </button>
-        <LinkButton
-          class="bg-red-500 text-sm"
-          :href="route('products.create')"
-        >
+        <LinkButton class="bg-red-500 text-sm" :href="route('products.create')">
           商品投稿
         </LinkButton>
       </div>
       <div v-else>
-        <Link
-          class="mr-5 text-indigo-600 hover:text-indigo-400"
-          :href="route('login')"
-        >
+        <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('login')">
           ログイン
         </Link>
-        <Link
-          class="mr-5 text-indigo-600 hover:text-indigo-400"
-          :href="route('register')"
-        >
+        <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('register')">
           会員登録
         </Link>
-        <LinkButton
-          class="bg-red-500 text-sm"
-          :href="route('products.create')"
-        >
+        <LinkButton class="bg-red-500 text-sm" :href="route('products.create')">
           商品投稿
         </LinkButton>
       </div>

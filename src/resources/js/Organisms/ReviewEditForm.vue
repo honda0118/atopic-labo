@@ -32,7 +32,7 @@ const onSubmit = handleSubmit((values) => {
   form.patch(route("reviews.update", { review: props.product.pivot.id }), {
     onSuccess: () => {
       useFlashMessageStore().setIsShow(true);
-    }
+    },
   });
 });
 </script>

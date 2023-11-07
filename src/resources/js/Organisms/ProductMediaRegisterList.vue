@@ -2,7 +2,7 @@
 import LinkButton from "@/Atoms/Button/LinkButton.vue";
 import VButton from "@/Atoms/Button/VButton.vue";
 import Media from "@/Molecules/Media.vue";
-import { router  } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 defineProps({
@@ -48,7 +48,7 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
             編集する
           </LinkButton>
           <VButton
-            ref="vButtons" 
+            ref="vButtons"
             class="bg-indigo-500 text-sm"
             type="button"
             @click="onDeletionButtonClicked(index, product.id)"

@@ -96,20 +96,13 @@ const toOtherPage = (e) => {
     <span class="block">発売日：{{ product.released_at }}</span>
     <span class="mb-4 block">投稿日：{{ product.created_at }}</span>
     <div class="mb-2">
-      <IconButton
-        :isDisabled="isProcessing"
-        class="mr-4"
-        @click="onFavoriteButtonClicked"
-      >
+      <IconButton :isDisabled="isProcessing" class="mr-4" @click="onFavoriteButtonClicked">
         <template v-slot:icon>
           <HearIcon :isFull="isFullFavoriteIcon" />
         </template>
         お気に入りに登録する
       </IconButton>
-      <IconButton
-        :isDisabled="isProcessing"
-        @click="onLikeButtonClicked"
-      >
+      <IconButton :isDisabled="isProcessing" @click="onLikeButtonClicked">
         <template v-slot:icon>
           <LikeIcon :isFull="isFullLikeIcon" />
         </template>

@@ -30,7 +30,7 @@ const onSubmit = handleSubmit((values) => {
   form.post(route("profile.update"), {
     onSuccess: () => {
       useFlashMessageStore().setIsShow(true);
-    }
+    },
   });
 });
 
@@ -41,7 +41,12 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 <template>
   <form @submit.prevent="onSubmit" novalidate>
     <div class="mb-4">
-      <InputTextItem id="name" :value="$page.props.auth.user.name" validationName="name" label="名前" />
+      <InputTextItem
+        id="name"
+        :value="$page.props.auth.user.name"
+        validationName="name"
+        label="名前"
+      />
       <ErrorText :text="form.errors.name" class="mt-2" />
     </div>
     <div class="mb-4">

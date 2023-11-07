@@ -78,7 +78,7 @@ const onSubmit = handleSubmit((values) => {
   form.post(route("products.store"), {
     onSuccess: () => {
       useFlashMessageStore().setIsShow(true);
-    }
+    },
   });
 });
 

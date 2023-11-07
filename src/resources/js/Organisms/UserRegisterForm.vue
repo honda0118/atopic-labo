@@ -47,12 +47,7 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
       <ErrorText :text="form.errors.name" class="mt-2" />
     </div>
     <div class="mb-4">
-      <InputTextItem
-        id="email"
-        label="メールアドレス"
-        type="email"
-        validationName="email"
-      />
+      <InputTextItem id="email" label="メールアドレス" type="email" validationName="email" />
       <ErrorText :text="form.errors.email" class="mt-2" />
     </div>
     <div class="mb-4">
