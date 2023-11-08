@@ -8,17 +8,26 @@ import { Link } from "@inertiajs/vue3";
 
 <template>
   <nav class="flex">
-    <Link :href="route('ranking.index')" class="mr-4 w-1/3">
+    <Link
+      :href="route('ranking.index')"
+      class="mr-4 w-1/3"
+    >
       <IconNav nav="ランキング">
         <RankingIcon />
       </IconNav>
     </Link>
-    <Link :href="route('categories.index')" class="mr-4 w-1/3">
+    <Link
+      :href="route('categories.index')"
+      class="mr-4 w-1/3"
+    >
       <IconNav nav="カテゴリー">
         <BrandIcon />
       </IconNav>
     </Link>
-    <Link :href="route('brands.index')" class="w-1/3">
+    <Link
+      :href="route('brands.index')"
+      class="w-1/3"
+    >
       <IconNav nav="ブランド">
         <CategoryIcon />
       </IconNav>

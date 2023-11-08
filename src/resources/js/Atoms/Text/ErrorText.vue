@@ -5,5 +5,10 @@ defineProps({
 </script>
 
 <template>
-  <p class="text-sm text-red-500" v-if="text">{{ text }}</p>
+  <p
+    v-if="text"
+    class="text-sm text-red-500"
+  >
+    {{ text }}
+  </p>
 </template>

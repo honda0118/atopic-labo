@@ -34,7 +34,12 @@ const onSubmit = () => {
     </div>
     <div class="mx-auto hidden max-w-screen-lg md:block">
       <div class="flex px-4 pb-8 pt-4">
-        <VAside :isSmall="true" :categories="categories" :brands="brands" class="mr-10 w-1/4" />
+        <VAside
+          :isSmall="true"
+          :categories="categories"
+          :brands="brands"
+          class="mr-10 w-1/4"
+        />
         <main class="w-3/4">
           <h1 class="mb-2 text-lg font-bold">{{ heading }}</h1>
           <slot />
@@ -46,7 +51,10 @@ const onSubmit = () => {
         <h1 class="mb-2 text-lg font-bold">{{ heading }}</h1>
         <slot />
       </main>
-      <VAside :categories="categories" :brands="brands" />
+      <VAside
+        :categories="categories"
+        :brands="brands"
+      />
     </div>
   </div>
 </template>

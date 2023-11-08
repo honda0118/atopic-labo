@@ -14,7 +14,11 @@ const onInputed = (e) => {
 
 <template>
   <div class="relative">
-    <input :placeholder="placeholder" class="w-full rounded border-gray-700" @input="onInputed" />
+    <input
+      :placeholder="placeholder"
+      class="w-full rounded border-gray-700"
+      @input="onInputed"
+    />
     <button>
       <SearchIcon class="absolute right-2 top-1/2 transform cursor-pointer" />
     </button>

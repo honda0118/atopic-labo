@@ -12,9 +12,19 @@ defineProps({
 </script>
 
 <template>
-  <ul class="border-t border-gray-300" v-if="items.length">
-    <Link v-for="item in items" :key="item.href" :href="item.href">
-      <ListItemChevronRightIcon :isSmall="isSmall" :nav="item.nav" />
+  <ul
+    v-if="items.length"
+    class="border-t border-gray-300"
+  >
+    <Link
+      v-for="item in items"
+      :key="item.href"
+      :href="item.href"
+    >
+      <ListItemChevronRightIcon
+        :isSmall="isSmall"
+        :nav="item.nav"
+      />
     </Link>
   </ul>
 </template>

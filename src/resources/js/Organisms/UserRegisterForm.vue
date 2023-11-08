@@ -43,12 +43,27 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 <template>
   <form @submit.prevent="onSubmit" novalidate>
     <div class="mb-4">
-      <InputTextItem id="name" label="名前" validationName="name" />
-      <ErrorText :text="form.errors.name" class="mt-2" />
+      <InputTextItem
+        id="name"
+        label="名前"
+        validationName="name"
+      />
+      <ErrorText
+        :text="form.errors.name"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
-      <InputTextItem id="email" label="メールアドレス" type="email" validationName="email" />
-      <ErrorText :text="form.errors.email" class="mt-2" />
+      <InputTextItem
+        id="email"
+        label="メールアドレス"
+        type="email"
+        validationName="email"
+      />
+      <ErrorText
+        :text="form.errors.email"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -58,7 +73,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         type="password"
         validationName="password"
       />
-      <ErrorText :text="form.errors.password" class="mt-2" />
+      <ErrorText
+        :text="form.errors.password"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -77,8 +95,17 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         label="アイコン"
         validationName="icon"
       />
-      <ErrorText :text="form.errors.icon" class="mt-2" />
+      <ErrorText
+        :text="form.errors.icon"
+        class="mt-2"
+      />
     </div>
-    <VButton :isDisabled="form.processing" :isFull="true" class="bg-red-500">登録する</VButton>
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      登録する
+    </VButton>
   </form>
 </template>

@@ -9,7 +9,10 @@ defineProps({
 <template>
   <div v-if="links.length > 3">
     <div class="-mb-1 flex flex-wrap">
-      <template v-for="(link, p) in links" :key="p">
+      <template
+        v-for="(link, p) in links"
+        :key="p"
+      >
         <div
           v-if="link.url === null"
           class="mb-1 mr-1 rounded border px-4 py-3 text-sm leading-4 text-gray-400"

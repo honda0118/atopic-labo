@@ -41,7 +41,10 @@ const onSubmit = handleSubmit((values) => {
         type="password"
         validationName="password"
       />
-      <ErrorText :text="form.errors.password" class="mt-2" />
+      <ErrorText
+        :text="form.errors.password"
+        class="mt-2"
+      />
     </div>
     <div class="mb-8">
       <InputTextItem
@@ -51,6 +54,12 @@ const onSubmit = handleSubmit((values) => {
         validationName="passwordConfirm"
       />
     </div>
-    <VButton :isDisabled="form.processing" :isFull="true" class="bg-red-500"> 更新する </VButton>
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      更新する
+    </VButton>
   </form>
 </template>

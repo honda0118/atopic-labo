@@ -43,16 +43,36 @@ const onButtonClicked = () => {
 <template>
   <form @submit.prevent="onSubmit" novalidate>
     <div class="mb-4">
-      <InputTextItem id="email" label="メールアドレス" type="email" validationName="email" />
-      <ErrorText class="mt-2" :text="form.errors.email" />
+      <InputTextItem
+        id="email"
+        label="メールアドレス"
+        type="email"
+        validationName="email"
+      />
+      <ErrorText
+        :text="form.errors.email"
+        class="mt-2"
+      />
     </div>
     <div class="mb-8">
-      <InputTextItem id="password" label="パスワード" type="password" validationName="password" />
-      <ErrorText class="mt-2" :text="form.errors.password" />
+      <InputTextItem
+        id="password"
+        label="パスワード"
+        type="password"
+        validationName="password"
+      />
+      <ErrorText
+        :text="form.errors.password"
+        class="mt-2"
+      />
     </div>
-    <VButton class="mb-8 bg-indigo-500" :isDisabled="form.processing" :isFull="true"
-      >ログイン</VButton
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="mb-8 bg-indigo-500"
     >
+      ログイン
+    </VButton>
     <VButton
       :isDisabled="formGuestUser.processing"
       :isFull="true"

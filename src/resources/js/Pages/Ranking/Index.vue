@@ -16,8 +16,15 @@ defineProps({
 <template>
   <TwoColumnLayout>
     <Head :title="title" />
-    <SearchFormNavMain :brands="brands" :categories="categories" :heading="heading">
-      <ProductMediaList :products="products" :isShowRanking="true" />
+    <SearchFormNavMain
+      :brands="brands"
+      :categories="categories"
+      :heading="heading"
+    >
+      <ProductMediaList
+        :products="products"
+        :isShowRanking="true"
+      />
     </SearchFormNavMain>
   </TwoColumnLayout>
 </template>

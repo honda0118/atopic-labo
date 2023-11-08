@@ -101,7 +101,10 @@ const close = () => {
 </script>
 
 <template>
-  <UserDeletionModal @close="close" :isOpen="isOpen" />
+  <UserDeletionModal
+    :isOpen="isOpen"
+    @close="close"
+  />
   <div>
     <div class="mb-14 flex flex-col text-center">
       <CircularImage
@@ -111,21 +114,39 @@ const close = () => {
       />
       <span class="mb-4">{{ $page.props.auth.user.name }}</span>
       <p>お肌にやさしい商品を投稿しませんか？</p>
-      <div v-if="flashMessageStore.isShow" class="relative">
+      <div
+        v-if="flashMessageStore.isShow"
+        class="relative"
+      >
         <p class="absolute top-2 w-full rounded bg-red-500 py-2 text-white">
           {{ $page.props.flash.message }}
         </p>
       </div>
     </div>
     <h2 class="mb-4 ml-2 text-xl font-black">商品</h2>
-    <NavListChevronRight :items="productItems" class="mb-8" />
+    <NavListChevronRight
+      :items="productItems"
+      class="mb-8"
+    />
     <h2 class="mb-4 ml-2 text-xl font-black">会員</h2>
-    <NavListChevronRight v-if="isEasyLoginUser" :items="easyLoginUserItems" />
-    <NavListChevronRight v-else :items="userItems" />
-    <ul class="mb-4 cursor-pointer" @click="onItemClicked">
+    <NavListChevronRight
+      v-if="isEasyLoginUser"
+      :items="easyLoginUserItems"
+    />
+    <NavListChevronRight
+      v-else
+      :items="userItems"
+    />
+    <ul
+      class="mb-4 cursor-pointer"
+      @click="onItemClicked"
+    >
       <ListItemChevronRightIcon nav="退会する" />
     </ul>
-    <p v-if="isEasyLoginUser" class="text-red-500">
+    <p
+      v-if="isEasyLoginUser"
+      class="text-red-500"
+    >
       かんたんログイン機能でログインした会員は、会員メニューを利用することができません。
     </p>
   </div>

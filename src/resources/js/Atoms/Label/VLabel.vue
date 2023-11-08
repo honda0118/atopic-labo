@@ -5,7 +5,10 @@ defineProps({
 </script>
 
 <template>
-  <label class="block font-bold text-gray-700" :for="for">
+  <label
+    class="block font-bold text-gray-700"
+    :for="for"
+  >
     <slot />
   </label>
 </template>

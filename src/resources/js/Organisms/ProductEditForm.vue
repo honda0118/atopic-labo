@@ -112,7 +112,10 @@ const image = computed(() => (index) => {
         label="ブランド"
         validationName="brandId"
       />
-      <ErrorText class="mt-2" :text="form.errors.brand_id" />
+      <ErrorText
+        :text="form.errors.brand_id"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <SelectItem
@@ -121,7 +124,10 @@ const image = computed(() => (index) => {
         label="カテゴリー"
         validationName="categoryId"
       />
-      <ErrorText class="mt-2" :text="form.errors.category_id" />
+      <ErrorText
+        :text="form.errors.category_id"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -130,7 +136,10 @@ const image = computed(() => (index) => {
         label="商品名"
         validationName="productName"
       />
-      <ErrorText class="mt-2" :text="form.errors.name" />
+      <ErrorText
+        :text="form.errors.name"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextAreaItem
@@ -139,7 +148,10 @@ const image = computed(() => (index) => {
         label="商品説明"
         validationName="productDescription"
       />
-      <ErrorText class="mt-2" :text="form.errors.description" />
+      <ErrorText
+        :text="form.errors.description"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -150,7 +162,10 @@ const image = computed(() => (index) => {
         validationName="priceIncludingTax"
         placeholder="0"
       />
-      <ErrorText class="mt-2" :text="form.errors.price_including_tax" />
+      <ErrorText
+        :text="form.errors.price_including_tax"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -160,7 +175,10 @@ const image = computed(() => (index) => {
         validationName="releasedAt"
         type="date"
       />
-      <ErrorText class="mt-2" :text="form.errors.released_at" />
+      <ErrorText
+        :text="form.errors.released_at"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputFileItemImage
@@ -170,7 +188,10 @@ const image = computed(() => (index) => {
         label="商品画像1枚目"
         validationName="productImage1"
       />
-      <ErrorText class="mt-2" :text="form.errors.image1" />
+      <ErrorText
+        :text="form.errors.image1"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputFileItemImage
@@ -180,7 +201,10 @@ const image = computed(() => (index) => {
         label="商品画像2枚目"
         validationName="productImage2"
       />
-      <ErrorText class="mt-2" :text="form.errors.image2" />
+      <ErrorText
+        :text="form.errors.image2"
+        class="mt-2"
+      />
     </div>
     <div class="mb-8">
       <InputFileItemImage
@@ -190,8 +214,17 @@ const image = computed(() => (index) => {
         label="商品画像3枚目"
         validationName="productImage3"
       />
-      <ErrorText class="mt-2" :text="form.errors.image3" />
+      <ErrorText
+        :text="form.errors.image3"
+        class="mt-2"
+      />
     </div>
-    <VButton class="bg-red-500" :isDisabled="form.processing" :isFull="true">更新する</VButton>
+    <VButton  
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      更新する
+    </VButton>
   </form>
 </template>

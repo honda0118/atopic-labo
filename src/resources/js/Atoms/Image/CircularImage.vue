@@ -19,5 +19,10 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <img class="rounded-full" :class="classes" :alt="alt" :src="src" />
+  <img
+    class="rounded-full"
+    :class="classes"
+    :alt="alt"
+    :src="src"
+  />
 </template>

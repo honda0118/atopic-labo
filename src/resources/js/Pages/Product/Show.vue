@@ -32,7 +32,11 @@ const images = computed(() => {
     <main class="hidden p-4 md:block">
       <div class="mx-auto max-w-screen-lg">
         <div class="mb-8 flex items-start">
-          <VSwiper :isShowThumbnail="true" :images="images" class="mr-8 w-1/3" />
+          <VSwiper
+            :isShowThumbnail="true"
+            :images="images"
+            class="mr-8 w-1/3"
+          />
           <div class="w-2/3">
             <ProductDetail
               :product="product"

@@ -7,5 +7,8 @@ const onOverlayClicked = () => {
 </script>
 
 <template>
-  <div class="absolute h-full w-full bg-gray-500 opacity-75" @click="onOverlayClicked" />
+  <div
+    class="absolute h-full w-full bg-gray-500 opacity-75"
+    @click="onOverlayClicked"
+  />
 </template>

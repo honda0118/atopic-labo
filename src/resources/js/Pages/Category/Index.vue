@@ -23,8 +23,15 @@ const formatedCategories = computed(() => {
 <template>
   <TwoColumnLayout>
     <Head title="カテゴリー" />
-    <SearchFormNavMain :brands="asideBrands" :categories="asideCategories" heading="カテゴリー">
-      <NavListChevronRight :items="formatedCategories" class="mb-6" />
+    <SearchFormNavMain
+      :brands="asideBrands"
+      :categories="asideCategories"
+      heading="カテゴリー"
+    >
+      <NavListChevronRight
+        :items="formatedCategories"
+        class="mb-6"
+      />
     </SearchFormNavMain>
   </TwoColumnLayout>
 </template>

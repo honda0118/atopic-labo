@@ -49,13 +49,20 @@ const onFileCanceled = () => {
       <OptionalIcon v-if="isShowOptionalIcon" />
     </div>
     <div class="flex items-center">
-      <img class="mr-8 h-28 w-28" :alt="alt" :src="src" />
+      <img
+        :alt="alt"
+        :src="src"
+        class="mr-8 h-28 w-28"
+      />
       <InputFile
         :accept="accept"
         :validationName="validationName"
         @="{ error: onErrorOccurred, change: onFileChanged, cancel: onFileCanceled }"
       />
     </div>
-    <ErrorText class="mt-2" :text="error" />
+    <ErrorText
+      class="mt-2"
+      :text="error"
+    />
   </div>
 </template>
