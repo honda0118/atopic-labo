@@ -52,12 +52,28 @@ const onSubmit = handleSubmit((values) => {
 例)敏感肌でも使えるのでありがたいです。冬の乾燥にも程よい保湿力でベタつかず、使いやすいです。"
         :value="product.pivot.text"
       />
-      <ErrorText class="mt-2" :text="form.errors.text" />
+      <ErrorText
+        :text="form.errors.text"
+        class="mt-2"
+      />
     </div>
     <div class="mb-8">
-      <RatingItem label="満足度" validationName="score" :value="product.pivot.score" />
-      <ErrorText class="mt-2" :text="form.errors.score" />
+      <RatingItem 
+        :value="product.pivot.score"
+        label="満足度"
+        validationName="score"
+      />
+      <ErrorText
+        :text="form.errors.score"
+        class="mt-2"
+      />
     </div>
-    <VButton class="bg-red-500" :isDisabled="form.processing" :isFull="true">更新する</VButton>
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      更新する
+    </VButton>
   </form>
 </template>

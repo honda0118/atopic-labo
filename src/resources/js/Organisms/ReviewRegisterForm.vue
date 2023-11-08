@@ -48,9 +48,21 @@ const onSubmit = handleSubmit((values) => {
       <ErrorText class="mt-2" :text="form.errors.text" />
     </div>
     <div class="mb-8">
-      <RatingItem label="満足度" validationName="score" />
-      <ErrorText class="mt-2" :text="form.errors.score" />
+      <RatingItem
+        label="満足度"
+        validationName="score"
+      />
+      <ErrorText
+        :text="form.errors.score"
+        class="mt-2"
+      />
     </div>
-    <VButton class="bg-red-500" :isDisabled="form.processing" :isFull="true">投稿する</VButton>
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      投稿する
+    </VButton>
   </form>
 </template>

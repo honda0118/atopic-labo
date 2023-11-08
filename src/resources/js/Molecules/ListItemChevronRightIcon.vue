@@ -20,8 +20,8 @@ const classes = computed(() => {
 
 <template>
   <li
-    class="flex items-center justify-between border-b border-gray-300 pl-2 hover:bg-gray-100"
     :class="classes"
+    class="flex items-center justify-between border-b border-gray-300 pl-2 hover:bg-gray-100"
   >
     {{ nav }}
     <ChevronRightIcon />

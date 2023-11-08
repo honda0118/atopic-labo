@@ -31,8 +31,15 @@ const formatedBrands = computed(() => {
 <template>
   <aside>
     <span class="mb-2 block pl-2 text-lg font-bold">人気カテゴリー</span>
-    <NavListChevronRight :isSmall="isSmall" :items="formatedCategories" class="mb-6" />
+    <NavListChevronRight
+      :isSmall="isSmall"
+      :items="formatedCategories"
+      class="mb-6"
+    />
     <span class="mb-2 block pl-2 text-lg font-bold">人気ブランド</span>
-    <NavListChevronRight :isSmall="isSmall" :items="formatedBrands" />
+    <NavListChevronRight
+      :isSmall="isSmall"
+      :items="formatedBrands"
+    />
   </aside>
 </template>

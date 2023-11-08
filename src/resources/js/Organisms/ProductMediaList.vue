@@ -15,7 +15,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 </script>
 
 <template>
-  <ul v-if="products.length" class="border-t border-gray-300">
+  <ul
+    v-if="products.length"
+    class="border-t border-gray-300"
+  >
     <li
       v-for="(product, index) in products"
       :key="product.id"
@@ -29,8 +32,11 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
           alt="商品"
         >
           <div class="text-sm">
-            <span v-if="isShowRanking" class="block text-2xl font-bold text-red-500"
-              >#{{ index + 1 }}
+            <span
+              v-if="isShowRanking"
+              class="block text-2xl font-bold text-red-500"
+            >
+              #{{ index + 1 }}
             </span>
             <div class="mb-2 flex items-center">
               <StarRating

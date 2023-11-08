@@ -18,7 +18,10 @@ const onButtonClicked = () => {
         <Logo />
       </Link>
       <div v-if="$page.props.auth.user">
-        <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('mypage')">
+        <Link
+          :href="route('mypage')"
+          class="mr-5 text-indigo-600 hover:text-indigo-400"
+        >
           マイページ
         </Link>
         <button
@@ -28,18 +31,30 @@ const onButtonClicked = () => {
         >
           ログアウト
         </button>
-        <LinkButton class="bg-red-500 text-sm" :href="route('products.create')">
+        <LinkButton
+          :href="route('products.create')"
+          class="bg-red-500 text-sm"
+        >
           商品投稿
         </LinkButton>
       </div>
       <div v-else>
-        <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('login')">
+        <Link
+          :href="route('login')"
+          class="mr-5 text-indigo-600 hover:text-indigo-400"
+        >
           ログイン
         </Link>
-        <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('register')">
+        <Link
+          :href="route('register')"
+          class="mr-5 text-indigo-600 hover:text-indigo-400"
+        >
           会員登録
         </Link>
-        <LinkButton class="bg-red-500 text-sm" :href="route('products.create')">
+        <LinkButton
+          :href="route('products.create')"
+          class="bg-red-500 text-sm"
+        >
           商品投稿
         </LinkButton>
       </div>
@@ -51,16 +66,23 @@ const onButtonClicked = () => {
         <Link href="/">
           <Logo />
         </Link>
-        <LinkButton class="bg-red-500 text-sm" :isFull="false" :href="route('products.create')"
-          >商品投稿</LinkButton
+        <LinkButton
+          :isFull="false"
+          :href="route('products.create')"
+          class="bg-red-500 text-sm"
         >
+          商品投稿
+        </LinkButton>
       </div>
       <div class="flex items-center justify-between">
         <p>Atopic laboにようこそ！</p>
         <div v-if="$page.props.auth.user">
-          <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('mypage')"
-            >マイページ</Link
+          <Link
+            :href="route('mypage')"
+            class="mr-5 text-indigo-600 hover:text-indigo-400"
           >
+            マイページ
+          </Link>
           <button
             :disabled="form.processing"
             class="text-indigo-600 hover:text-indigo-400"
@@ -70,12 +92,18 @@ const onButtonClicked = () => {
           </button>
         </div>
         <div class="text-right" v-else>
-          <Link class="mr-5 text-indigo-600 hover:text-indigo-400" :href="route('login')"
-            >ログイン</Link
+          <Link
+            :href="route('login')"
+            class="mr-5 text-indigo-600 hover:text-indigo-400"
           >
-          <Link class="text-indigo-600 hover:text-indigo-400" :href="route('register')"
-            >会員登録</Link
+            ログイン
+          </Link>
+          <Link
+            :href="route('register')"
+            class="text-indigo-600 hover:text-indigo-400"
           >
+            会員登録
+          </Link>
         </div>
       </div>
     </div>

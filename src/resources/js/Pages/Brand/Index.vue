@@ -23,8 +23,15 @@ const formatedBrands = computed(() => {
 <template>
   <TwoColumnLayout>
     <Head title="ブランド" />
-    <SearchFormNavMain :brands="asideBrands" :categories="asideCategories" heading="ブランド">
-      <NavListChevronRight :items="formatedBrands" class="mb-6" />
+    <SearchFormNavMain
+      :brands="asideBrands"
+      :categories="asideCategories"
+      heading="ブランド"
+    >
+      <NavListChevronRight
+        :items="formatedBrands"
+        class="mb-6"
+      />
     </SearchFormNavMain>
   </TwoColumnLayout>
 </template>

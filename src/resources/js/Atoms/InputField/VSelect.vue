@@ -30,7 +30,11 @@ watch(errorMessage, () => {
     class="w-full rounded border-gray-300"
   >
     <option value="" hidden>選択してください</option>
-    <option v-for="item in items" :key="item.id" :value="item.id">
+    <option
+      v-for="item in items"
+      :key="item.id"
+      :value="item.id"
+    >
       {{ item.label }}
     </option>
   </Field>

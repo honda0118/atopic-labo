@@ -13,7 +13,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
   <div v-if="product.reviews.length">
     <p class="mb-2 text-sm text-red-500">1商品につき1回クチコミを投稿できます。</p>
     <ul class="border-t border-gray-300">
-      <li v-for="user in product.reviews" class="border-b border-gray-300">
+      <li
+        v-for="user in product.reviews"
+        class="border-b border-gray-300"
+      >
         <div class="flex justify-between border-b-2 py-2">
           <div class="flex items-center">
             <CircularImage

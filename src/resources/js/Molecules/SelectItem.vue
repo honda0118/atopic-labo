@@ -27,6 +27,9 @@ const onErrorOccurred = (errorMessage) => {
       :items="items"
       :value="value"
     />
-    <ErrorText class="mt-2" :text="error" />
+    <ErrorText
+      class="mt-2"
+      :text="error"
+    />
   </div>
 </template>

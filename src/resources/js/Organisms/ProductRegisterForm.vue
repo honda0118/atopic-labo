@@ -105,12 +105,26 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 <template>
   <form @submit.prevent="onSubmit" novalidate>
     <div class="mb-4">
-      <SelectItem :items="formatedBrands" label="ブランド" validationName="brandId" />
-      <ErrorText class="mt-2" :text="form.errors.brand_id" />
+      <SelectItem
+        :items="formatedBrands"
+        label="ブランド"
+        validationName="brandId"
+      />
+      <ErrorText
+        :text="form.errors.brand_id"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
-      <SelectItem :items="formatedCategories" label="カテゴリー" validationName="categoryId" />
-      <ErrorText class="mt-2" :text="form.errors.category_id" />
+      <SelectItem
+        :items="formatedCategories"
+        label="カテゴリー"
+        validationName="categoryId"
+      />
+      <ErrorText
+        :text="form.errors.category_id"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -119,7 +133,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         placeholder="例)ポアクリア オイル"
         validationName="productName"
       />
-      <ErrorText class="mt-2" :text="form.errors.name" />
+      <ErrorText
+        :text="form.errors.name"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextAreaItem
@@ -130,7 +147,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 毛穴の約20,000分の1サイズの微細な洗浄成分を配合しました。古い角質と皮脂が混ざり合った「固まり角栓」をやわらかくほぐし、スルンと除去。
 毛穴の黒ずみやザラつきのない 、つるすべの肌に洗い上げます。心やすらぐグリーンフローラルの香り。"
       />
-      <ErrorText class="mt-2" :text="form.errors.description" />
+      <ErrorText
+        :text="form.errors.description"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -140,11 +160,22 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         validationName="priceIncludingTax"
         placeholder="0"
       />
-      <ErrorText class="mt-2" :text="form.errors.price_including_tax" />
+      <ErrorText
+        :text="form.errors.price_including_tax"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
-      <InputTextItem id="released-at" label="発売日" validationName="releasedAt" type="date" />
-      <ErrorText class="mt-2" :text="form.errors.released_at" />
+      <InputTextItem
+        id="released-at"
+        label="発売日"
+        validationName="releasedAt"
+        type="date"
+      />
+      <ErrorText
+        :text="form.errors.released_at"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputFileItemImage
@@ -154,7 +185,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         :src="fileSystemUrl + '/images/product/product_sample.jpg'"
         validationName="productImage1"
       />
-      <ErrorText class="mt-2" :text="form.errors.image1" />
+      <ErrorText
+        :text="form.errors.image1"
+        class="mt-2" 
+      />
     </div>
     <div class="mb-4">
       <InputFileItemImage
@@ -165,7 +199,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         :src="fileSystemUrl + '/images/product/product_sample.jpg'"
         validationName="productImage2"
       />
-      <ErrorText class="mt-2" :text="form.errors.image2" />
+      <ErrorText
+        :text="form.errors.image2"
+        class="mt-2"
+      />
     </div>
     <div class="mb-10">
       <InputFileItemImage
@@ -176,7 +213,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         :src="fileSystemUrl + '/images/product/product_sample.jpg'"
         validationName="productImage3"
       />
-      <ErrorText class="mt-2" :text="form.errors.image3" />
+      <ErrorText
+        :text="form.errors.image3"
+        class="mt-2"
+      />
     </div>
     <span class="mb-4 block bg-amber-100 p-2 text-center text-xl font-bold">クチコミ</span>
     <div class="mb-4">
@@ -188,12 +228,27 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 
 例)敏感肌でも使えるのでありがたいです。冬の乾燥にも程よい保湿力でベタつかず、使いやすいです。"
       />
-      <ErrorText class="mt-2" :text="form.errors.text" />
+      <ErrorText
+        :text="form.errors.text"
+        class="mt-2"
+      />
     </div>
     <div class="mb-8">
-      <RatingItem label="満足度" validationName="score" />
-      <ErrorText class="mt-2" :text="form.errors.score" />
+      <RatingItem
+        label="満足度"
+        validationName="score"
+      />
+      <ErrorText
+        :text="form.errors.score"
+        class="mt-2"
+      />
     </div>
-    <VButton class="bg-red-500" :isDisabled="form.processing" :isFull="true">投稿する</VButton>
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      投稿する
+    </VButton>
   </form>
 </template>

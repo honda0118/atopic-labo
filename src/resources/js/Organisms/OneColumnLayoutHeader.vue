@@ -18,7 +18,10 @@ const onButtonClicked = () => {
 <template>
   <header class="border-b border-gray-300">
     <div class="relative mx-auto flex max-w-screen-sm items-center justify-center py-5">
-      <BackIcon class="absolute left-5" @click="onIconClicked" />
+      <BackIcon
+        class="absolute left-5"
+        @click="onIconClicked"
+      />
       <Link href="/">
         <Logo />
       </Link>

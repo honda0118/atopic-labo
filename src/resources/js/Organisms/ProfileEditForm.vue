@@ -47,7 +47,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         validationName="name"
         label="名前"
       />
-      <ErrorText :text="form.errors.name" class="mt-2" />
+      <ErrorText
+        :text="form.errors.name"
+        class="mt-2"
+      />
     </div>
     <div class="mb-4">
       <InputTextItem
@@ -57,7 +60,10 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         type="email"
         validationName="email"
       />
-      <ErrorText :text="form.errors.email" class="mt-2" />
+      <ErrorText
+        :text="form.errors.email"
+        class="mt-2"
+      />
     </div>
     <div class="mb-8">
       <InputFileItemCircularImage
@@ -67,8 +73,17 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
         label="アイコン"
         validationName="icon"
       />
-      <ErrorText :text="form.errors.icon" class="mt-2" />
+      <ErrorText
+        :text="form.errors.icon"
+        class="mt-2"
+      />
     </div>
-    <VButton :isDisabled="form.processing" :isFull="true" class="bg-red-500"> 更新する </VButton>
+    <VButton
+      :isDisabled="form.processing"
+      :isFull="true"
+      class="bg-red-500"
+    >
+      更新する
+    </VButton>
   </form>
 </template>

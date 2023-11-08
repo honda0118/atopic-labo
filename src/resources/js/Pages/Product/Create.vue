@@ -12,6 +12,9 @@ defineProps({
 <template>
   <OneColumnLayout heading="商品投稿">
     <Head title="商品投稿" />
-    <ProductRegisterForm :brands="brands" :categories="categories" />
+    <ProductRegisterForm
+      :brands="brands"
+      :categories="categories"
+    />
   </OneColumnLayout>
 </template>

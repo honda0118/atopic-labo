@@ -22,7 +22,10 @@ const onButtonClicked = () => {
 
 <template>
   <teleport to="body">
-    <div v-if="isOpen" class="fixed left-0 top-0 z-50 h-full w-full">
+    <div
+      v-if="isOpen"
+      class="fixed left-0 top-0 z-50 h-full w-full"
+    >
       <Overlay @click="close" />
       <div class="absolute left-1/2 top-1/2 w-72 transform">
         <CancelMenu

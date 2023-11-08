@@ -69,8 +69,14 @@ const modules = [Navigation, Thumbs];
       :modules="modules"
       :autoHeight="true"
     >
-      <swiper-slide v-for="(image, index) in images" :key="index">
-        <img :src="image" class="aspect-square w-full" />
+      <swiper-slide
+        v-for="(image, index) in images"
+        :key="index"
+      >
+        <img
+          :src="image"
+          class="aspect-square w-full"
+        />
       </swiper-slide>
     </swiper>
     <swiper
@@ -86,7 +92,10 @@ const modules = [Navigation, Thumbs];
         :key="index"
         class="cursor-pointer opacity-100"
       >
-        <img :src="image" class="aspect-square w-full" />
+        <img
+          :src="image"
+          class="aspect-square w-full"
+        />
       </swiper-slide>
     </swiper>
   </div>

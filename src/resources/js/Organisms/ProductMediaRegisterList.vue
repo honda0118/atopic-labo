@@ -30,11 +30,20 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
 </script>
 
 <template>
-  <ul class="border-t border-gray-300" v-if="products.length">
-    <li v-for="(product, index) in products" class="border-b border-gray-300 pt-4">
+  <ul
+    v-if="products.length"
+    class="border-t border-gray-300"
+  >
+    <li
+      v-for="(product, index) in products"
+      class="border-b border-gray-300 pt-4"
+    >
       <span class="mb-2 block text-gray-500">{{ product.brand.name }}</span>
       <h2 class="border-b-2 pb-2">{{ product.name }}</h2>
-      <Media :src="fileSystemUrl + '/images/product/' + product.product_images[0].image" alt="商品">
+      <Media
+        :src="fileSystemUrl + '/images/product/' + product.product_images[0].image"
+        alt="商品"
+      >
         <div class="text-sm">
           <span class="mb-2 block">{{ product.category.name }}</span>
           <p class="mb-2 whitespace-pre-wrap">{{ product.description }}</p>

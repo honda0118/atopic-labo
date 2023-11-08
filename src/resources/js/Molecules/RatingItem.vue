@@ -29,6 +29,9 @@ const { value: fieldValue, errorMessage } = useField(() => props.validationName,
       :read-only="false"
       active-color="orange"
     />
-    <ErrorText class="mt-2" :text="errorMessage" />
+    <ErrorText
+      :text="errorMessage"
+      class="mt-2"
+    />
   </div>
 </template>
