@@ -72,7 +72,7 @@ class ProfileTest extends TestCase
                 'request_params' => [
                     'name' => str_repeat('x', 50),
                     'email' => str_repeat('x', 64) . '@gmail.com',
-                    'icon' => UploadedFile::fake()->image('test.jpg')->size(4096)
+                    'icon' => UploadedFile::fake()->image('test.jpg')->size(8192)
                 ]
             ],
             'PNGファイル' => [
@@ -153,7 +153,7 @@ class ProfileTest extends TestCase
                 'request_params' => [
                     'name' => str_repeat('x', 51),
                     'email' => str_repeat('x', 65) . '@gmail.com',
-                    'icon' => UploadedFile::fake()->image('test.png')->size(4097)
+                    'icon' => UploadedFile::fake()->image('test.png')->size(8193)
                 ]
             ],
             'RFCに準拠していないメールアドレス。＠マークの前にドットがある。' => [
