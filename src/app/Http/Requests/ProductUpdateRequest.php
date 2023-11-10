@@ -24,9 +24,9 @@ class ProductUpdateRequest extends FormRequest
             'description' => ['required', 'string', 'max:1000'],
             'price_including_tax' => ['required', 'integer', 'max:100000', 'regex:/^[1-9][0-9]*$/'],
             'released_at' => ['required', 'date_format:Y-m-d', 'before_or_equal:today'],
-            'image1' => ['nullable', 'file', 'max:4096', 'image', 'mimes:jpeg,png'],
-            'image2' => ['nullable', 'file', 'max:4096', 'image', 'mimes:jpeg,png'],
-            'image3' => ['nullable', 'file', 'max:4096', 'image', 'mimes:jpeg,png']
+            'image1' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png'],
+            'image2' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png'],
+            'image3' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png']
         ];
     }
 

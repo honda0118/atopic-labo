@@ -77,7 +77,7 @@ class RegistrationTest extends TestCase
                     'password_confirmation' => '12345678',
                 ],
                 'request_icon_params' => [
-                    'icon' => UploadedFile::fake()->image('test.jpg')->size(4096),
+                    'icon' => UploadedFile::fake()->image('test.jpg')->size(8192),
                 ],
             ],
             'PNGファイル' => [
@@ -92,7 +92,7 @@ class RegistrationTest extends TestCase
                     'password_confirmation' => '12345678',
                 ],
                 'request_icon_params' => [
-                    'icon' => UploadedFile::fake()->image('test.png')->size(4096)
+                    'icon' => UploadedFile::fake()->image('test.png')->size(8192)
                 ],
             ],
         ];
@@ -172,7 +172,7 @@ class RegistrationTest extends TestCase
                     'email' => str_repeat('x', 65) . '@gmail.com',
                     'password' => str_repeat('x', 7),
                     'password_confirmation' => str_repeat('x', 7),
-                    'icon' => UploadedFile::fake()->image('test.png')->size(4097)
+                    'icon' => UploadedFile::fake()->image('test.png')->size(8193)
                 ],
             ],
             'RFCに準拠していないメールアドレス。＠マークの前にドットがある。' => [

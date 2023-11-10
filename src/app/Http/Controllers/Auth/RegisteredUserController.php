@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
                 'name' => ['required', 'string', 'max:50'],
                 'email' => ['required', 'string', 'email:strict,spoof,filter,dns', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'icon' => ['nullable', 'file', 'max:4096', 'image', 'mimes:jpeg,png']
+                'icon' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png']
             ],
             [
                 'icon.max' => '4MB以下のファイルを選択してください。',

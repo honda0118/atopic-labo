@@ -114,9 +114,9 @@ class ProductTest extends TestCase
                     'released_at' => Carbon::now()->format('Y-m-d'),
                 ],
                 $request_image_params = [
-                    'image1' => UploadedFile::fake()->image('test.jpg')->size(4096),
-                    'image2' => UploadedFile::fake()->image('test.jpg')->size(4096),
-                    'image3' => UploadedFile::fake()->image('test.jpg')->size(4096),
+                    'image1' => UploadedFile::fake()->image('test.jpg')->size(8192),
+                    'image2' => UploadedFile::fake()->image('test.jpg')->size(8192),
+                    'image3' => UploadedFile::fake()->image('test.jpg')->size(8192),
                 ],
                 $request_review_params = [
                     'text' => str_repeat('x', 1000),
@@ -139,9 +139,9 @@ class ProductTest extends TestCase
                     'released_at' => Carbon::now()->format('Y-m-d'),
                 ],
                 $request_image_params = [
-                    'image1' => UploadedFile::fake()->image('test.jpg')->size(4096),
-                    'image2' => UploadedFile::fake()->image('test.jpg')->size(4096),
-                    'image3' => UploadedFile::fake()->image('test.jpg')->size(4096),
+                    'image1' => UploadedFile::fake()->image('test.jpg')->size(8192),
+                    'image2' => UploadedFile::fake()->image('test.jpg')->size(8192),
+                    'image3' => UploadedFile::fake()->image('test.jpg')->size(8192),
                 ],
                 $request_review_params = [
                     'text' => str_repeat('x', 1000),
@@ -229,9 +229,9 @@ class ProductTest extends TestCase
                     'description' => str_repeat('x', 1001),
                     'price_including_tax' => 100001,
                     'released_at' => Carbon::now()->addDay()->format('Y-m-d'),
-                    'image1' => UploadedFile::fake()->image('test.png')->size(4097),
-                    'image2' => UploadedFile::fake()->image('test.png')->size(4097),
-                    'image3' => UploadedFile::fake()->image('test.png')->size(4097),
+                    'image1' => UploadedFile::fake()->image('test.png')->size(8193),
+                    'image2' => UploadedFile::fake()->image('test.png')->size(8193),
+                    'image3' => UploadedFile::fake()->image('test.png')->size(8193),
                 ]
             ],
             // 境界値
@@ -438,9 +438,9 @@ class ProductTest extends TestCase
             'released_at' => Carbon::now()->format('Y-m-d'),
         ];
         $request_image_params = [
-            'image1' => UploadedFile::fake()->image('test.jpg')->size(4096),
-            'image2' => UploadedFile::fake()->image('test.jpg')->size(4096),
-            'image3' => UploadedFile::fake()->image('test.jpg')->size(4096)
+            'image1' => UploadedFile::fake()->image('test.jpg')->size(8192),
+            'image2' => UploadedFile::fake()->image('test.jpg')->size(8192),
+            'image3' => UploadedFile::fake()->image('test.jpg')->size(8192)
         ];
         $marged_request_params = array_merge($request_params, $request_image_params);
 
@@ -558,9 +558,9 @@ class ProductTest extends TestCase
                     'description' => str_repeat('x', 1001),
                     'price_including_tax' => 100001,
                     'released_at' => Carbon::now()->addDay()->format('Y-m-d'),
-                    'image1' => UploadedFile::fake()->image('test.png')->size(4097),
-                    'image2' => UploadedFile::fake()->image('test.png')->size(4097),
-                    'image3' => UploadedFile::fake()->image('test.png')->size(4097),
+                    'image1' => UploadedFile::fake()->image('test.png')->size(8193),
+                    'image2' => UploadedFile::fake()->image('test.png')->size(8193),
+                    'image3' => UploadedFile::fake()->image('test.png')->size(8193),
                 ],
             ],
             '商品名が文字列以外' => [
