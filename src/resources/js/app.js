@@ -27,6 +27,16 @@ defineRule('custom_url', value => {
   return true;
 });
 
+defineRule('price_including_tax', value => {
+  const regexp = new RegExp(/^[1-9][0-9]*$/);
+
+  if (!regexp.test(value)) {
+    return "税込価格は正の整数を指定してください";
+  }
+
+  return true;
+});
+
 configure({
   generateMessage: localize("ja", {
     messages: ja.messages,
@@ -70,6 +80,9 @@ configure({
       productImage3: {
         required: "商品画像を選択してください",
         size: "4MB以下の画像を選択してください",
+      },
+      priceIncludingTax: {
+        max_value: "税込価格は10万円以下で指定してください",
       },
     },
   }),
