@@ -161,7 +161,7 @@ return [
         'brand_id' => 'ブランド',
         'category_id' => 'カテゴリー',
         'price_including_tax' => '税込価格',
-        'released_at' => '発売日',
+        'purchase_site' => '購入サイト',
         'text' => '本文',
         'score' => '満足度',
     ]

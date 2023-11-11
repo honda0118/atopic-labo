@@ -52,7 +52,6 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
             </div>
             <span class="mb-2 block">{{ product.category.name }}</span>
             <span class="block">税込価格：{{ product.price_including_tax }}円</span>
-            <span class="block">発売日：{{ product.released_at }}</span>
             <span class="block">投稿日：{{ product.save_interval }}</span>
           </div>
         </Media>

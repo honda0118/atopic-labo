@@ -26,7 +26,7 @@ class Product extends Model
         'name',
         'description',
         'price_including_tax',
-        'released_at',
+        'purchase_site',
         'user_id'
     ];
 
