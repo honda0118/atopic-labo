@@ -40,6 +40,7 @@
 # 使用技術
 ## フロントエンド
 - Vue.js 3.3.4
+- Pinia
 - vee-validate
 - vue-star-rating
 - swiper
