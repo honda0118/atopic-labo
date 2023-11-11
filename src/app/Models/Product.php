@@ -110,7 +110,7 @@ class Product extends Model
      */
     protected function serializeDate(DateTimeInterface $date): String
     {
-        return $date->format('Y-m-d');
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
