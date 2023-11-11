@@ -8,7 +8,6 @@ import InputFileItemImage from "@/Molecules/InputFileItemImage.vue";
 import { useFlashMessageStore } from "@/stores/flashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { useForm as useFormValidate } from "vee-validate";
-import { validatePriceIncludingTax } from "@/Modules/validation";
 import { computed } from "vue";
 
 const props = defineProps({
@@ -24,14 +23,7 @@ const { handleSubmit } = useFormValidate({
     categoryId: "required",
     productName: "required|max:50",
     productDescription: "required|max:1000",
-    priceIncludingTax: (value) => {
-      const errorMessage = validatePriceIncludingTax(value);
-
-      if (errorMessage) {
-        return errorMessage;
-      }
-      return true;
-    },
+    priceIncludingTax: "required|max_value:100000|price_including_tax",
     purchaseSite: "required|custom_url|max:1500",
     productImage1: "size:4096|mimes:image/jpeg,image/png",
     productImage2: "size:4096|mimes:image/jpeg,image/png",
