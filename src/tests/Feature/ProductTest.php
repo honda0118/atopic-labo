@@ -103,7 +103,7 @@ class ProductTest extends TestCase
                 // 商品説明は1000文字以下
                 // 税込価格は10万円以下
                 // 購入サイトは1500文字以下
-                // 商品画像サイズ4MB以下
+                // 商品画像サイズ8MB以下
                 // クチコミ本文は1000文字以下
                 // クチコミ満足度は1以下5以下
                 $request_params = [
@@ -128,7 +128,7 @@ class ProductTest extends TestCase
                 // 商品説明は1000文字以下
                 // 税込価格は10万円以下
                 // 購入サイトは1500文字以下
-                // 商品画像サイズ4MB以下
+                // 商品画像サイズ8MB以下
                 // クチコミ本文は1000文字以下
                 // クチコミ満足度は1以下5以下
                 $request_params = [
@@ -207,7 +207,7 @@ class ProductTest extends TestCase
             // 商品説明は1000文字以下
             // 税込価格は10万円以下
             // 購入サイトは1500文字以下
-            // 商品画像サイズ4MB以下
+            // 商品画像サイズ8MB以下
             // 本文は1000文字以下
             '境界値超え' => [
                 'expected' => [
@@ -217,9 +217,9 @@ class ProductTest extends TestCase
                     'description' => '商品説明は、1000文字以下で指定してください。',
                     'price_including_tax' => '税込価格は10万円以下で指定してください。',
                     'purchase_site' => '購入サイトは、1500文字以下で指定してください。',
-                    'image1' => '4MB以下の画像を選択してください。',
-                    'image2' => '4MB以下の画像を選択してください。',
-                    'image3' => '4MB以下の画像を選択してください。',
+                    'image1' => '8MB以下の画像を選択してください。',
+                    'image2' => '8MB以下の画像を選択してください。',
+                    'image3' => '8MB以下の画像を選択してください。',
                 ],
                 'request_params' => [
                     'brand_id' => '1',
@@ -435,7 +435,7 @@ class ProductTest extends TestCase
         // 商品説明は1000文字以下
         // 税込価格は10万円以下
         // 購入サイトは1500文字以下
-        // 商品画像サイズ4MB以下
+        // 商品画像サイズ8MB以下
         $request_params = [
             'brand_id' => $product->brand_id,
             'category_id' => $product->category_id,
@@ -545,7 +545,7 @@ class ProductTest extends TestCase
             // 商品説明は1000文字以下
             // 税込価格は10万円以下
             // 購入サイトは1500文字以下
-            // 商品画像サイズ4MB以下
+            // 商品画像サイズ8MB以下
             '境界値超え' => [
                 'expected' => [
                     'brand_id' => '選択されたブランドは正しくありません。',
@@ -554,9 +554,9 @@ class ProductTest extends TestCase
                     'description' => '商品説明は、1000文字以下で指定してください。',
                     'price_including_tax' => '税込価格は10万円以下で指定してください。',
                     'purchase_site' => '購入サイトは、1500文字以下で指定してください。',
-                    'image1' => '4MB以下の画像を選択してください。',
-                    'image2' => '4MB以下の画像を選択してください。',
-                    'image3' => '4MB以下の画像を選択してください。',
+                    'image1' => '8MB以下の画像を選択してください。',
+                    'image2' => '8MB以下の画像を選択してください。',
+                    'image3' => '8MB以下の画像を選択してください。',
                 ],
                 'request_params' => [
                     'brand_id' => '100',

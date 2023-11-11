@@ -13,7 +13,7 @@ const { handleSubmit } = useFormValidate({
     email: "required|email|max:74",
     password: "required|min:8",
     passwordConfirm: "required|confirmed:@password",
-    icon: "size:4096|mimes:image/jpeg,image/png",
+    icon: "size:8192|mimes:image/jpeg,image/png",
   },
 });
 
