@@ -78,7 +78,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'price_including_tax' => $request->price_including_tax,
-                'released_at' => $request->released_at,
+                'purchase_site' => $request->purchase_site,
                 'user_id' => $request->user()->id
             ]);
 
@@ -196,7 +196,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'price_including_tax' => $request->price_including_tax,
-                'released_at' => $request->released_at,
+                'purchase_site' => $request->purchase_site,
             ])->save();
 
             $imagesToSave = [];

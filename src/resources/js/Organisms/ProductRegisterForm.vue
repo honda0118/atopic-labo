@@ -6,7 +6,7 @@ import InputTextItem from "@/Molecules/InputTextItem.vue";
 import InputTextAreaItem from "@/Molecules/InputTextAreaItem.vue";
 import RatingItem from "@/Molecules/RatingItem.vue";
 import InputFileItemImage from "@/Molecules/InputFileItemImage.vue";
-import { validatePriceIncludingTax, validateReleasedAt } from "@/Modules/validation";
+import { validatePriceIncludingTax } from "@/Modules/validation";
 import { useFlashMessageStore } from "@/stores/flashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { useForm as useFormValidate } from "vee-validate";
@@ -32,14 +32,7 @@ const { handleSubmit } = useFormValidate({
       }
       return true;
     },
-    releasedAt: (value) => {
-      const errorMessage = validateReleasedAt(value);
-
-      if (errorMessage) {
-        return errorMessage;
-      }
-      return true;
-    },
+    purchaseSite: "required|custom_url|max:1500",
     productImage1: "required|size:4096|mimes:image/jpeg,image/png",
     productImage2: "size:4096|mimes:image/jpeg,image/png",
     productImage3: "size:4096|mimes:image/jpeg,image/png",
@@ -55,7 +48,7 @@ const form = useForm({
   name: "",
   description: "",
   price_including_tax: 0,
-  released_at: "",
+  purchase_site: "",
   image1: null,
   image2: null,
   image3: null,
@@ -69,7 +62,7 @@ const onSubmit = handleSubmit((values) => {
   form.name = values.productName;
   form.description = values.productDescription;
   form.price_including_tax = values.priceIncludingTax;
-  form.released_at = values.releasedAt;
+  form.purchase_site = values.purchaseSite;
   form.image1 = values.productImage1;
   form.image2 = values.productImage2;
   form.image3 = values.productImage3;
@@ -167,13 +160,13 @@ const fileSystemUrl = import.meta.env.VITE_FILESYSTEM_URL;
     </div>
     <div class="mb-4">
       <InputTextItem
-        id="released-at"
-        label="発売日"
-        validationName="releasedAt"
-        type="date"
+        id="purchase-site"
+        label="購入サイト"
+        placeholder="例)https://www.amazon.co.jp/TIAS-%E3%83%98%E3%83%91%E3%83%AA%E3%83%B3%E9%A1%9E%E4%BC%BC%E7%89%A9%E8%B3%AA-%E3%83%92%E3%83%AB%E3%83%89%E3%82%B1%E3%82%A2-%E3%83%A2%E3%82%A4%E3%82%B9%E3%83%81%E3%83%A3%E2%80%95-500mL/dp/B0B8GNGN65/ref=sr_1_4?crid=2OUXPNWZ92L65&keywords=tias+%E3%83%92%E3%83%AB%E3%83%89%E3%82%B1%E3%82%A2&qid=1699696973&s=beauty&sprefix=%2Cbeauty%2C155&sr=1-4"
+        validationName="purchaseSite"
       />
       <ErrorText
-        :text="form.errors.released_at"
+        :text="form.errors.purchase_site"
         class="mt-2"
       />
     </div>

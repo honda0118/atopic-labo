@@ -20,7 +20,7 @@ class ProductFactory extends Factory
             'name' => fake()->text(50),
             'description' => fake()->text(),
             'price_including_tax' => fake()->numberBetween(1, 100000),
-            'released_at' => fake()->date(),
+            'purchase_site' => fake()->date(),
             'brand_id' => fake()->numberBetween(1, 19),
             'category_id' => fake()->numberBetween(1, 6),
             'user_id' => 1

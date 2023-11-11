@@ -15,15 +15,3 @@ export const validatePriceIncludingTax = (value) => {
     return "税込価格は10万円以下で指定してください。";
   }
 };
-
-// 発売日を検証する
-export const validateReleasedAt = (value) => {
-  if (!value) {
-    return "発売日は必須項目です";
-  }
-
-  if (isNowDateOrLess(value)) {
-    return;
-  }
-  return "発売日は今日以前の日付を指定してください。";
-};

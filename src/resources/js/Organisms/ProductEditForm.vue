@@ -8,7 +8,7 @@ import InputFileItemImage from "@/Molecules/InputFileItemImage.vue";
 import { useFlashMessageStore } from "@/stores/flashMessage";
 import { useForm } from "@inertiajs/vue3";
 import { useForm as useFormValidate } from "vee-validate";
-import { validatePriceIncludingTax, validateReleasedAt } from "@/Modules/validation";
+import { validatePriceIncludingTax } from "@/Modules/validation";
 import { computed } from "vue";
 
 const props = defineProps({
@@ -32,14 +32,7 @@ const { handleSubmit } = useFormValidate({
       }
       return true;
     },
-    releasedAt: (value) => {
-      const errorMessage = validateReleasedAt(value);
-
-      if (errorMessage) {
-        return errorMessage;
-      }
-      return true;
-    },
+    purchaseSite: "required|custom_url|max:1500",
     productImage1: "size:4096|mimes:image/jpeg,image/png",
     productImage2: "size:4096|mimes:image/jpeg,image/png",
     productImage3: "size:4096|mimes:image/jpeg,image/png",
@@ -53,7 +46,7 @@ const form = useForm({
   name: "",
   description: "",
   price_including_tax: 0,
-  released_at: "",
+  purchase_site: "",
   image1: null,
   image2: null,
   image3: null,
@@ -65,7 +58,7 @@ const onSubmit = handleSubmit((values) => {
   form.name = values.productName;
   form.description = values.productDescription;
   form.price_including_tax = values.priceIncludingTax;
-  form.released_at = values.releasedAt;
+  form.purchase_site = values.purchaseSite;
   form.image1 = values.productImage1;
   form.image2 = values.productImage2;
   form.image3 = values.productImage3;
@@ -169,14 +162,13 @@ const image = computed(() => (index) => {
     </div>
     <div class="mb-4">
       <InputTextItem
-        id="released-at"
-        :value="product.released_at"
-        label="発売日"
-        validationName="releasedAt"
-        type="date"
+        id="purchase-site"
+        :value="product.purchase_site"
+        label="購入サイト"
+        validationName="purchaseSite"
       />
       <ErrorText
-        :text="form.errors.released_at"
+        :text="form.errors.purchase_site"
         class="mt-2"
       />
     </div>

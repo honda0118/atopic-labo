@@ -16,6 +16,17 @@ import * as allRules from "@vee-validate/rules";
 Object.keys(allRules).forEach((rule) => {
   defineRule(rule, allRules[rule]);
 });
+
+defineRule('custom_url', value => {
+  const regexp = new RegExp(/^(https|http):\/\/.*/);
+
+  if (!regexp.test(value)) {
+    return "購入サイトは有効なURLではありません";
+  }
+
+  return true;
+});
+
 configure({
   generateMessage: localize("ja", {
     messages: ja.messages,
@@ -30,7 +41,7 @@ configure({
       productName: "商品名",
       productDescription: "商品説明",
       priceIncludingTax: "税込価格",
-      releasedAt: "発売日",
+      purchaseSite: "購入サイト",
       productImage1: "商品画像",
       productImage2: "商品画像",
       productImage3: "商品画像",

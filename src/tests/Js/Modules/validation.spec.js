@@ -1,4 +1,4 @@
-import { validatePriceIncludingTax, validateReleasedAt } from "@/Modules/validation";
+import { validatePriceIncludingTax } from "@/Modules/validation";
 
 describe("validation.jsをテスト", () => {
   test("境界値。税込価格が10万円以下の場合は「false」を返すこと。", () => {
@@ -20,23 +20,5 @@ describe("validation.jsをテスト", () => {
     const actual = validatePriceIncludingTax("011");
 
     expect(actual).toBe("税込価格は正の整数を指定してください。");
-  });
-
-  test("発売日が空の場合は「発売日は必須項目です」を返すこと", () => {
-    const actual = validateReleasedAt("");
-
-    expect(actual).toBe("発売日は必須項目です");
-  });
-  test("境界値。発売日が今日の場合は「false」を返すこと。", () => {
-    const actual = validateReleasedAt(new Date());
-
-    expect(actual).toBeFalsy();
-  });
-  test("境界値。発売日が明日の場合は「発売日は今日以前の日付を指定してください。」を返すこと。", () => {
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
-    const actual = validateReleasedAt(date);
-
-    expect(actual).toBe("発売日は今日以前の日付を指定してください。");
   });
 });

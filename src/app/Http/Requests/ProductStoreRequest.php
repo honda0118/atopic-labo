@@ -20,7 +20,7 @@ class ProductStoreRequest extends FormRequest
             'name' => ['required', 'string', 'max:50', 'unique:products'],
             'description' => ['required', 'string', 'max:1000'],
             'price_including_tax' => ['required', 'integer', 'max:100000', 'regex:/^[1-9][0-9]*$/'],
-            'released_at' => ['required', 'date_format:Y-m-d', 'before_or_equal:today'],
+            'purchase_site' => ['required', 'url', 'max:1500'],
             'image1' => ['required', 'file', 'max:8192', 'image', 'mimes:jpeg,png'],
             'image2' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png'],
             'image3' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png'],
@@ -42,7 +42,6 @@ class ProductStoreRequest extends FormRequest
             'image1.max' => '4MB以下の画像を選択してください。',
             'image2.max' => '4MB以下の画像を選択してください。',
             'image3.max' => '4MB以下の画像を選択してください。',
-            'released_at.before_or_equal' => '発売日は今日以前の日付を指定してください。',
             'price_including_tax.regex' => '税込価格は正の整数を指定してください。',
             'price_including_tax.max' => '税込価格は10万円以下で指定してください。'
         ];

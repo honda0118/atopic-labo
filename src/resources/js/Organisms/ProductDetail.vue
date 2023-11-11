@@ -1,5 +1,6 @@
 <script setup>
 import LinkButton from "@/Atoms/Button/LinkButton.vue";
+import VButton from "@/Atoms/Button/VButton.vue";
 import HearIcon from "@/Atoms/Icon/HeartIcon.vue";
 import LikeIcon from "@/Atoms/Icon/LikeIcon.vue";
 import IconButton from "@/Molecules/IconButton.vue";
@@ -72,6 +73,11 @@ const toOtherPage = (e) => {
     router.get("/");
   }
 };
+
+// purchase site button 
+const onPurchaseSiteButtonClicked = () => {
+  window.location = props.product.purchase_site;
+};
 </script>
 
 <template>
@@ -93,7 +99,6 @@ const toOtherPage = (e) => {
     <span class="mb-2 block">{{ product.category.name }}</span>
     <p class="mb-4 whitespace-pre-wrap">{{ product.description }}</p>
     <span class="block">税込価格：{{ product.price_including_tax }}円</span>
-    <span class="block">発売日：{{ product.released_at }}</span>
     <span class="mb-4 block">投稿日：{{ product.created_at }}</span>
     <div class="mb-2">
       <IconButton
@@ -117,6 +122,13 @@ const toOtherPage = (e) => {
       </IconButton>
     </div>
     <p class="mb-6 text-sm text-red-500">マイページでお気に入りを確認できます。</p>
+    <VButton
+      :isFull="true"
+      class="mb-6 bg-indigo-500"
+      @click="onPurchaseSiteButtonClicked"
+    >
+      購入サイトへ
+    </VButton>
     <LinkButton
       v-if="!hasRegisterdReview"
       :isFull="true"

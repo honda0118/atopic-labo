@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 50)->unique();
             $table->string('description', 1000);
             $table->unsignedMediumInteger('price_including_tax');
-            $table->date('released_at');
+            $table->string('purchase_site', 1500);
             $table->unsignedSmallInteger('brand_id');
             $table->unsignedTinyInteger('category_id');
             $table->unsignedMediumInteger('user_id');

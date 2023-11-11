@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Providers\RouteServiceProvider;
-use Carbon\Carbon;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 use Tests\Factories\ProductFactory;
@@ -103,7 +102,7 @@ class ProductTest extends TestCase
                 // 商品名は50文字以下
                 // 商品説明は1000文字以下
                 // 税込価格は10万円以下
-                // 発売日は今日以前の日付
+                // 購入サイトは1500文字以下
                 // 商品画像サイズ4MB以下
                 // クチコミ本文は1000文字以下
                 // クチコミ満足度は1以下5以下
@@ -111,7 +110,7 @@ class ProductTest extends TestCase
                     'name' => str_repeat('x', 50),
                     'description' => str_repeat('x', 1000),
                     'price_including_tax' => '100000',
-                    'released_at' => Carbon::now()->format('Y-m-d'),
+                    'purchase_site' => 'https://' . str_repeat('x', 1492),
                 ],
                 $request_image_params = [
                     'image1' => UploadedFile::fake()->image('test.jpg')->size(8192),
@@ -128,7 +127,7 @@ class ProductTest extends TestCase
                 // 商品名は50文字以下
                 // 商品説明は1000文字以下
                 // 税込価格は10万円以下
-                // 発売日は今日以前の日付
+                // 購入サイトは1500文字以下
                 // 商品画像サイズ4MB以下
                 // クチコミ本文は1000文字以下
                 // クチコミ満足度は1以下5以下
@@ -136,7 +135,7 @@ class ProductTest extends TestCase
                     'name' => str_repeat('x', 50),
                     'description' => str_repeat('x', 1000),
                     'price_including_tax' => '100000',
-                    'released_at' => Carbon::now()->format('Y-m-d'),
+                    'purchase_site' => 'https://' . str_repeat('x', 1492),
                 ],
                 $request_image_params = [
                     'image1' => UploadedFile::fake()->image('test.jpg')->size(8192),
@@ -188,7 +187,7 @@ class ProductTest extends TestCase
                     'name' => '商品名は必ず指定してください。',
                     'description' => '商品説明は必ず指定してください。',
                     'price_including_tax' => '税込価格は必ず指定してください。',
-                    'released_at' => '発売日は必ず指定してください。',
+                    'purchase_site' => '購入サイトは必ず指定してください。',
                     'image1' => '商品画像を選択してください。',
                 ],
                 'request_params' => [
@@ -197,7 +196,7 @@ class ProductTest extends TestCase
                     'name' => '',
                     'description' => '',
                     'price_including_tax' => '',
-                    'released_at' => '',
+                    'purchase_site' => '',
                     'image1' => null,
                 ]
             ],
@@ -207,7 +206,7 @@ class ProductTest extends TestCase
             // 商品名は50文字以下
             // 商品説明は1000文字以下
             // 税込価格は10万円以下
-            // 発売日は今日以前の日付
+            // 購入サイトは1500文字以下
             // 商品画像サイズ4MB以下
             // 本文は1000文字以下
             '境界値超え' => [
@@ -217,7 +216,7 @@ class ProductTest extends TestCase
                     'name' => '商品名は、50文字以下で指定してください。',
                     'description' => '商品説明は、1000文字以下で指定してください。',
                     'price_including_tax' => '税込価格は10万円以下で指定してください。',
-                    'released_at' => '発売日は今日以前の日付を指定してください。',
+                    'purchase_site' => '購入サイトは、1500文字以下で指定してください。',
                     'image1' => '4MB以下の画像を選択してください。',
                     'image2' => '4MB以下の画像を選択してください。',
                     'image3' => '4MB以下の画像を選択してください。',
@@ -228,7 +227,7 @@ class ProductTest extends TestCase
                     'name' => str_repeat('x', 51),
                     'description' => str_repeat('x', 1001),
                     'price_including_tax' => 100001,
-                    'released_at' => Carbon::now()->addDay()->format('Y-m-d'),
+                    'purchase_site' => 'https://' . str_repeat('x', 1493),
                     'image1' => UploadedFile::fake()->image('test.png')->size(8193),
                     'image2' => UploadedFile::fake()->image('test.png')->size(8193),
                     'image3' => UploadedFile::fake()->image('test.png')->size(8193),
@@ -253,6 +252,14 @@ class ProductTest extends TestCase
                 'request_params' => [
                     'score' => 6,
                 ]
+            ],
+            '購入サイトがURL形式以外' => [
+                'expected' => [
+                    'purchase_site' => '購入サイトに正しい形式を指定してください。'
+                ],
+                'request_params' => [
+                    'purchase_site' => 'ttp://test.com/test'
+                ],
             ],
             '税込価格が正の整数ではない' => [
                 'expected' => [
@@ -427,7 +434,7 @@ class ProductTest extends TestCase
         // 商品名は50文字以下
         // 商品説明は1000文字以下
         // 税込価格は10万円以下
-        // 発売日は今日以前の日付
+        // 購入サイトは1500文字以下
         // 商品画像サイズ4MB以下
         $request_params = [
             'brand_id' => $product->brand_id,
@@ -435,7 +442,7 @@ class ProductTest extends TestCase
             'name' => str_repeat('x', 50),
             'description' => str_repeat('x', 1000),
             'price_including_tax' => '100000',
-            'released_at' => Carbon::now()->format('Y-m-d'),
+            'purchase_site' => 'https://' . str_repeat('x', 1492),
         ];
         $request_image_params = [
             'image1' => UploadedFile::fake()->image('test.jpg')->size(8192),
@@ -520,7 +527,7 @@ class ProductTest extends TestCase
                     'name' => '商品名は必ず指定してください。',
                     'description' => '商品説明は必ず指定してください。',
                     'price_including_tax' => '税込価格は必ず指定してください。',
-                    'released_at' => '発売日は必ず指定してください。'
+                    'purchase_site' => '購入サイトは必ず指定してください。'
                 ],
                 'request_params' => [
                     'brand_id' => '',
@@ -528,7 +535,7 @@ class ProductTest extends TestCase
                     'name' => '',
                     'description' => '',
                     'price_including_tax' => '',
-                    'released_at' => ''
+                    'purchase_site' => ''
                 ],
             ],
             // 境界値
@@ -537,7 +544,7 @@ class ProductTest extends TestCase
             // 商品名は50文字以下
             // 商品説明は1000文字以下
             // 税込価格は10万円以下
-            // 発売日は今日以前の日付
+            // 購入サイトは1500文字以下
             // 商品画像サイズ4MB以下
             '境界値超え' => [
                 'expected' => [
@@ -546,7 +553,7 @@ class ProductTest extends TestCase
                     'name' => '商品名は、50文字以下で指定してください。',
                     'description' => '商品説明は、1000文字以下で指定してください。',
                     'price_including_tax' => '税込価格は10万円以下で指定してください。',
-                    'released_at' => '発売日は今日以前の日付を指定してください。',
+                    'purchase_site' => '購入サイトは、1500文字以下で指定してください。',
                     'image1' => '4MB以下の画像を選択してください。',
                     'image2' => '4MB以下の画像を選択してください。',
                     'image3' => '4MB以下の画像を選択してください。',
@@ -557,7 +564,7 @@ class ProductTest extends TestCase
                     'name' => str_repeat('x', 51),
                     'description' => str_repeat('x', 1001),
                     'price_including_tax' => 100001,
-                    'released_at' => Carbon::now()->addDay()->format('Y-m-d'),
+                    'purchase_site' => 'https://' . str_repeat('x', 1493),
                     'image1' => UploadedFile::fake()->image('test.png')->size(8193),
                     'image2' => UploadedFile::fake()->image('test.png')->size(8193),
                     'image3' => UploadedFile::fake()->image('test.png')->size(8193),
@@ -579,15 +586,15 @@ class ProductTest extends TestCase
                     'description' => 1
                 ],
             ],
-            '発売日が形式以外' => [
+            '購入サイトがURL形式以外' => [
                 'expected' => [
-                    'released_at' => '発売日はY-m-d形式で指定してください。'
+                    'purchase_site' => '購入サイトに正しい形式を指定してください。'
                 ],
                 'request_params' => [
-                    'released_at' => '2023/09/26'
+                    'purchase_site' => 'ttp://test.com/test'
                 ],
             ],
-            '税込価格が正の整数ではない' => [
+            '税込価格が正の整数以外' => [
                 'expected' => [
                     'price_including_tax' => '税込価格は正の整数を指定してください。'
                 ],
