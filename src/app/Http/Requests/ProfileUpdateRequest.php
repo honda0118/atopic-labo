@@ -32,7 +32,7 @@ class ProfileUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'icon.max' => '4MB以下のファイルを選択してください。'
+            'icon.max' => '8MB以下のファイルを選択してください。'
         ];
     }
 }

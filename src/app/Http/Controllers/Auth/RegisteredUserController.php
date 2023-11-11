@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
                 'icon' => ['nullable', 'file', 'max:8192', 'image', 'mimes:jpeg,png']
             ],
             [
-                'icon.max' => '4MB以下のファイルを選択してください。',
+                'icon.max' => '8MB以下のファイルを選択してください。',
             ]
         );
         // アイコンが未選択の場合は「default.png」を使用する

@@ -66,7 +66,7 @@ class ProfileTest extends TestCase
             // 境界値
             // 名前は50文字以下
             // メールアドレスは74文字以下
-            // ファイルサイズ4MB以下
+            // ファイルサイズ8MB以下
             // ※JPGファイルの保存も確認する
             '境界値' => [
                 'request_params' => [
@@ -143,12 +143,12 @@ class ProfileTest extends TestCase
             // 境界値超え
             // 名前は50文字以下
             // メールアドレスは74文字以下
-            // ファイルサイズ4MB以下
+            // ファイルサイズ8MB以下
             '境界値超え' => [
                 'expected' => [
                     'name' => '名前は、50文字以下で指定してください。',
                     'email' => 'メールアドレスに誤りがあります。正しく指定してください。',
-                    'icon' => '4MB以下のファイルを選択してください。'
+                    'icon' => '8MB以下のファイルを選択してください。'
                 ],
                 'request_params' => [
                     'name' => str_repeat('x', 51),

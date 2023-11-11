@@ -39,9 +39,9 @@ class ProductUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'image1.max' => '4MB以下の画像を選択してください。',
-            'image2.max' => '4MB以下の画像を選択してください。',
-            'image3.max' => '4MB以下の画像を選択してください。',
+            'image1.max' => '8MB以下の画像を選択してください。',
+            'image2.max' => '8MB以下の画像を選択してください。',
+            'image3.max' => '8MB以下の画像を選択してください。',
             'price_including_tax.regex' => '税込価格は正の整数を指定してください。',
             'price_including_tax.max' => '税込価格は10万円以下で指定してください。'
         ];

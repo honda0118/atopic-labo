@@ -61,7 +61,7 @@ configure({
     },
     fields: {
       icon: {
-        size: "4MB以下の画像を選択してください",
+        size: "8MB以下の画像を選択してください",
       },
       passwordConfirm: {
         confirmed: "入力したパスワードと一致しません",
@@ -71,15 +71,15 @@ configure({
       },
       productImage1: {
         required: "商品画像を選択してください",
-        size: "4MB以下の画像を選択してください",
+        size: "8MB以下の画像を選択してください",
       },
       productImage2: {
         required: "商品画像を選択してください",
-        size: "4MB以下の画像を選択してください",
+        size: "8MB以下の画像を選択してください",
       },
       productImage3: {
         required: "商品画像を選択してください",
-        size: "4MB以下の画像を選択してください",
+        size: "8MB以下の画像を選択してください",
       },
       priceIncludingTax: {
         max_value: "税込価格は10万円以下で指定してください",

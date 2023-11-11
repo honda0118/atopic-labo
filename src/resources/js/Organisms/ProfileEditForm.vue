@@ -12,7 +12,7 @@ const { handleSubmit } = useFormValidate({
   validationSchema: {
     name: "required|max:50",
     email: "required|email|max:74",
-    icon: "size:4096|mimes:image/jpeg,image/png",
+    icon: "size:8192|mimes:image/jpeg,image/png",
   },
 });
 

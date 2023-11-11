@@ -25,9 +25,9 @@ const { handleSubmit } = useFormValidate({
     productDescription: "required|max:1000",
     priceIncludingTax: "required|max_value:100000|price_including_tax",
     purchaseSite: "required|custom_url|max:1500",
-    productImage1: "size:4096|mimes:image/jpeg,image/png",
-    productImage2: "size:4096|mimes:image/jpeg,image/png",
-    productImage3: "size:4096|mimes:image/jpeg,image/png",
+    productImage1: "size:8192|mimes:image/jpeg,image/png",
+    productImage2: "size:8192|mimes:image/jpeg,image/png",
+    productImage3: "size:8192|mimes:image/jpeg,image/png",
   },
 });
 
