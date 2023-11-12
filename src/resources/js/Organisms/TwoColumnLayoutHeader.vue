@@ -74,18 +74,18 @@ const onButtonClicked = () => {
           商品投稿
         </LinkButton>
       </div>
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between text-sm">
         <p>Atopic laboにようこそ！</p>
         <div v-if="$page.props.auth.user">
           <Link
             :href="route('mypage')"
-            class="mr-5 text-indigo-600 hover:text-indigo-400"
+            class="mr-3 text-indigo-600 hover:text-indigo-400 text-sm"
           >
             マイページ
           </Link>
           <button
             :disabled="form.processing"
-            class="text-indigo-600 hover:text-indigo-400"
+            class="text-indigo-600 hover:text-indigo-400 text-sm"
             @click="onButtonClicked"
           >
             ログアウト
@@ -94,13 +94,13 @@ const onButtonClicked = () => {
         <div class="text-right" v-else>
           <Link
             :href="route('login')"
-            class="mr-5 text-indigo-600 hover:text-indigo-400"
+            class="mr-3 text-indigo-600 hover:text-indigo-400 text-sm"
           >
             ログイン
           </Link>
           <Link
             :href="route('register')"
-            class="text-indigo-600 hover:text-indigo-400"
+            class="text-indigo-600 hover:text-indigo-400 text-sm"
           >
             会員登録
           </Link>
