@@ -9,6 +9,10 @@ module.exports = {
     "./resources/js/**/*.vue",
   ],
 
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+
   theme: {
     extend: {
       fontFamily: {
