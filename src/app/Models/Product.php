@@ -136,18 +136,17 @@ class Product extends Model
      */
     public function scopeKeyword($query, $keyword)
     {
-        if (is_null($keyword)) {
-            return;
-        }
+        if (!is_null($keyword)) {
+            // 全角スペースを半角に変換する
+            $formatedKeyword = mb_convert_kana($keyword, 's');
+            // 空白で区切る
+            $keywords = \preg_split('/[\s]+/', $formatedKeyword, -1, PREG_SPLIT_NO_EMPTY);
 
-        // 全角スペースを半角に変換する
-        $formatedKeyword = mb_convert_kana($keyword, 's');
-        // 空白で区切る
-        $keywords = \preg_split('/[\s]+/', $formatedKeyword, -1, PREG_SPLIT_NO_EMPTY);
+            foreach ($keywords as $keyword) {
+                $query->where(DB::raw("CONCAT(products.name, ' ', products.description, ' ', brands.name, ' ', categories.name)"), 'like', '%' . $keyword . '%');
+            }
 
-        foreach ($keywords as $keyword) {
-            $query->where(DB::raw("CONCAT(products.name, ' ', products.description, ' ', brands.name, ' ', categories.name)"), 'like', '%' . $keyword . '%');
+            return $query;
         }
-        return $query;
     }
 }
