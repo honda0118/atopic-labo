@@ -8,7 +8,7 @@ use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Services\Products;
+use App\Collections\Products;
 
 class SearchController extends Controller
 {

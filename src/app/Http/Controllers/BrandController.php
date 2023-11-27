@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Services\Products;
+use App\Collections\Products;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
