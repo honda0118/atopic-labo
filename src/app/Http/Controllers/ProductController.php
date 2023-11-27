@@ -7,7 +7,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Services\Products;
+use App\Collections\Products;
 use App\Services\StorageService;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;

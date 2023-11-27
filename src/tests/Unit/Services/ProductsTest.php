@@ -3,7 +3,7 @@
 namespace Tests\Unit\Services;
 
 use App\Models\User;
-use App\Services\Products;
+use App\Collections\Products;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tests\Factories\ProductFactory;
