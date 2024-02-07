@@ -111,3 +111,21 @@ Laravelと連携するSPAを容易に実装できるので選択しました。
 
 # ER図
 <img width="995" alt="ER図" src="https://user-images.githubusercontent.com/141541659/283320856-8808dbc5-d136-494e-ab40-730e85bc06ac.png">
+
+# 学習で使用した教材
+## 書籍
+- PHPフレームワークLaravel入門
+- PHPフレームワークLaravel実践開発
+- PHP本格入門[上] ~プログラミングとオブジェクト指向の基礎からデータベース連携まで
+- PHP本格入門[下] ~オブジェクト指向設計、セキュリティ、現場で使える実践ノウハウまで
+- Vue 3　フロントエンド開発の教科書
+- 改訂3版JavaScript本格入門　～モダンスタイルによる基礎から現場での応用まで
+- 達人に学ぶDB設計 徹底指南書 ～初級者で終わりたくないあなたへ
+- SQL 第2版: ゼロからはじめるデータベース操作
+- 新しいLinuxの教科書
+- リーダブルコード
+
+## 動画(udemy)
+- 【Laravel】【Vue.js3】で【CRM(顧客管理システム)】をつくってみよう【Breeze(Inertia)】
+- 超Vue.js 2 完全パック (Vue Router, Vuex含む)
+- AWS：ゼロから実践するAmazon Web Services。手を動かしながらインフラの基礎を習得
